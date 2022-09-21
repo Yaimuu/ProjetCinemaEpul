@@ -65,7 +65,7 @@ public class JwtTokenUtil implements Serializable {
                 .signWith(SignatureAlgorithm.HS512, secret).compact();
     }
 
-    //validation du Token
+    // Validation du Token
 
     public Boolean validateToken(String token, UserDetails userDetails) {
 

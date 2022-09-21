@@ -1,6 +1,6 @@
 package com.example.projetcinemaapi.service;
 
-import com.example.projetcinemaapi.repository.UserEntityRepository;
+import com.example.projetcinemaapi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,17 +13,17 @@ import java.util.ArrayList;
 @Service
 public class JwtUserDetailsService implements UserDetailsService {
 
-    private UserEntityRepository userRepostory;
+    private UserRepository userRepostory;
 
     // on initialise
     @Autowired
-    public JwtUserDetailsService(UserEntityRepository UtilisateurRepostory) {
+    public JwtUserDetailsService(UserRepository UtilisateurRepostory) {
         this.userRepostory = UtilisateurRepostory;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserEntity unUtilisateur = null;
+        com.example.projetcinemaapi.domains.User unUtilisateur = null;
         // on accède à l'utilisateur
         unUtilisateur = userRepostory.rechercheNom(username);
         if (unUtilisateur != null) {

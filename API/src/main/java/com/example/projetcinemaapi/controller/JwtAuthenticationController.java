@@ -1,6 +1,7 @@
 package com.example.projetcinemaapi.controller;
 
-import com.example.projetcinemaapi.repository.UserEntityRepository;
+import com.example.projetcinemaapi.domains.User;
+import com.example.projetcinemaapi.repository.UserRepository;
 import com.example.projetcinemaapi.security.JwtTokenUtil;
 import com.example.projetcinemaapi.security.requests.JwtResponse;
 import com.example.projetcinemaapi.service.JwtUserDetailsService;
@@ -26,16 +27,16 @@ public class JwtAuthenticationController {
     @Autowired
     private JwtUserDetailsService userDetailsService;
 
-    private UserEntityRepository userRepostory;
+    private UserRepository userRepostory;
 
     // on initialise
     @Autowired
-    public JwtAuthenticationController(UserEntityRepository UtilisateurRepostory) {
-        this.userRepostory = UtilisateurRepostory;
+    public JwtAuthenticationController(UserRepository userRepostory) {
+        this.userRepostory = userRepostory;
     }
     // auhentification  qui va généré un jeton
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody UserEntity unUti)
+    public ResponseEntity<?> createAuthenticationToken(@RequestBody User unUti)
             throws Exception {
         try {
             // On contrôle l'utilisateur

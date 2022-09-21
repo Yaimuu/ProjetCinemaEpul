@@ -1,12 +1,10 @@
 package com.example.projetcinemaapi.domains;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "user")
+@NamedQuery(name = "User.rechercheNom", query = "select ut  from User  ut where ut.login = ?1")
 public class User {
     @Id
     @Column(name = "id", nullable = false)

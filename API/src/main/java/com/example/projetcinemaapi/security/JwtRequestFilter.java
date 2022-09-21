@@ -57,7 +57,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                         userDetails, null, userDetails.getAuthorities());
                 usernamePasswordAuthenticationToken
                         .setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                // L'utilisateur est authentifié, et il a pssé la sécurité de Spring
+                // L'utilisateur est authentifié, et il a passé la sécurité de Spring
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
             }
         }
