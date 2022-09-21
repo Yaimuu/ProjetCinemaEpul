@@ -1,6 +1,5 @@
 package com.example.projetcinemaapi.repository;
 
-import com.example.projetcinemaapi.domains.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserEntityRepository extends JpaRepository<UserEntity, Integer> {

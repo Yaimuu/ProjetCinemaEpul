@@ -1,6 +1,5 @@
 package com.example.projetcinemaapi.controller;
 
-import com.example.projetcinemaapi.domains.UserEntity;
 import com.example.projetcinemaapi.repository.UserEntityRepository;
 import com.example.projetcinemaapi.security.JwtTokenUtil;
 import com.example.projetcinemaapi.security.requests.JwtResponse;

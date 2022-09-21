@@ -1,6 +1,5 @@
 package com.example.projetcinemaapi.service;
 
-import com.example.projetcinemaapi.domains.UserEntity;
 import com.example.projetcinemaapi.repository.UserEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
