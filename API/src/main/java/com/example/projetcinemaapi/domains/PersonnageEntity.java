@@ -6,7 +6,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "personnage", schema = "cinema", catalog = "")
 @IdClass(PersonnageEntityPK.class)
-public class PersonnageEntity {
+public class PersonnageEntity implements CinemaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "NoFilm")

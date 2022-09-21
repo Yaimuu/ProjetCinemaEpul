@@ -1,13 +1,13 @@
 package com.example.projetcinemaapi.controller;
 
-import com.example.projetcinemaapi.domains.FilmEntity;
+import com.example.projetcinemaapi.domains.CinemaEntity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Controlleur {
 
-    public List<FilmEntity> findAll() {
+    public List<CinemaEntity> findAll() {
         return new ArrayList<>();
     }
 }
