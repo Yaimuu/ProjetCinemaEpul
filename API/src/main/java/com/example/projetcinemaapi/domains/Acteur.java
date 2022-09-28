@@ -1,15 +1,13 @@
 package com.example.projetcinemaapi.domains;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "acteur")
 public class Acteur {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "NoAct", nullable = false)
     private Integer id;
 
