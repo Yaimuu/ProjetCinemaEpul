@@ -15,32 +15,36 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping("/authentification")
+import static com.example.projetcinemaapi.tools.Constants.AUTH_ROUTE;
+
+@RequestMapping("/" + AUTH_ROUTE)
 @RestController
 @CrossOrigin
 public class JwtAuthenticationController {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
-    @Autowired
-    private JwtTokenUtil jwtTokenUtil;
-    @Autowired
-    private JwtUserDetailsService userDetailsService;
+    private final AuthenticationManager authenticationManager;
+    private final JwtTokenUtil jwtTokenUtil;
+    private final JwtUserDetailsService userDetailsService;
 
-    private UserRepository userRepostory;
+    private UserRepository userRepository;
 
     // on initialise
     @Autowired
-    public JwtAuthenticationController(UserRepository userRepostory) {
-        this.userRepostory = userRepostory;
+    public JwtAuthenticationController(AuthenticationManager authenticationManager, JwtTokenUtil jwtTokenUtil, JwtUserDetailsService userDetailsService, UserRepository userRepository) {
+        this.authenticationManager = authenticationManager;
+        this.jwtTokenUtil = jwtTokenUtil;
+        this.userDetailsService = userDetailsService;
+        this.userRepository = userRepository;
     }
     // auhentification  qui va généré un jeton
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody User unUti)
             throws Exception {
         try {
+            System.out.println(unUti.toString());
             // On contrôle l'utilisateur
             UserDetails userDetails= appelAuthentication(unUti.getLogin(), unUti.getPassword());
+
             // on récupère les informations
             // nouvel accès à la base de données
             //final UserDetails userDetails = userDetailsService.loadUserByUsername(unUti.getNomUtil());
@@ -61,7 +65,7 @@ public class JwtAuthenticationController {
         try {
             Authentication  authentication = authenticationManager.
                     authenticate(new UsernamePasswordAuthenticationToken(username, password));
-            UserDetails userDetails= (UserDetails) authentication.getPrincipal();
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
             return userDetails;
         } catch (DisabledException e) {
             throw new Exception("USER_DISABLED", e);

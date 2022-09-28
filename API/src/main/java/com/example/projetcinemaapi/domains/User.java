@@ -7,6 +7,7 @@ import javax.persistence.*;
 @NamedQuery(name = "User.rechercheNom", query = "select ut  from User  ut where ut.login = ?1")
 public class User {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
@@ -16,6 +17,7 @@ public class User {
     @Column(name = "password", nullable = false, length = 50)
     private String password;
 
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "role", nullable = false, length = 30)
     private String role;
 

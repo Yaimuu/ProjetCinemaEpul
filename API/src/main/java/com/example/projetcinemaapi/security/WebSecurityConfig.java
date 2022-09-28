@@ -21,6 +21,8 @@ import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
 
+import static com.example.projetcinemaapi.tools.Constants.AUTH_ROUTE;
+
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -52,15 +54,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
-    // Configuration du comportement de votre APPI
+    // Configuration du comportement de votre API
     // face aux requêtes qui arrivent
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-System.out.println("je passe");
+        System.out.println("je passe");
         // On n'utilise pas de  CSRF (cross-site request forgery) pour cet exemple
         httpSecurity.csrf().disable()
                 // dont authenticate this particular request
-                .authorizeRequests().antMatchers("/authentification/login").permitAll().
+                .authorizeRequests().antMatchers("/" + AUTH_ROUTE + "/login").permitAll().
                 // toutes les requêtes doivent être authentifiées avec le jeton
                         anyRequest().authenticated().and().
                 //assurez-vous d'utiliser une session sans état
@@ -77,7 +79,7 @@ System.out.println("je passe");
 
     @Override
     public void configure(WebSecurity web) {
-        web.ignoring().antMatchers("/authentification/login")
+        web.ignoring().antMatchers("/" + AUTH_ROUTE + "/login")
                 .antMatchers(HttpMethod.OPTIONS, "/**");
     }
 
