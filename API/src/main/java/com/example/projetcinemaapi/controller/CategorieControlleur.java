@@ -23,13 +23,13 @@ public class CategorieControlleur {
     public ResponseEntity createCategorie(@RequestBody Categorie categorie){
         CategorieService categorieService = new CategorieService(categorieRepository);
         categorieService.createCategorie(categorie);
-        return ResponseEntity.ok("Categorie créé");
+        return ResponseEntity.ok("Categorie créée");
     }
     @PostMapping("/update")
     public ResponseEntity updateCategorie(@RequestBody Categorie categorie){
         CategorieService categorieService = new CategorieService(categorieRepository);
         categorieService.updateCategorie(categorie);
-        return ResponseEntity.ok("Categorie mis à jour");
+        return ResponseEntity.ok("Categorie mise à jour");
     }
 
     @GetMapping("/{id}")
