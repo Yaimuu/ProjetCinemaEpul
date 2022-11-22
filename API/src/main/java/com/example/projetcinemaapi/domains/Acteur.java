@@ -1,10 +1,17 @@
 package com.example.projetcinemaapi.domains;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "acteur")
+@Getter
+@Setter
+@ToString
 public class Acteur {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,45 +29,4 @@ public class Acteur {
 
     @Column(name = "DateDeces")
     private LocalDate dateDeces;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getNomAct() {
-        return nomAct;
-    }
-
-    public void setNomAct(String nomAct) {
-        this.nomAct = nomAct;
-    }
-
-    public String getPrenAct() {
-        return prenAct;
-    }
-
-    public void setPrenAct(String prenAct) {
-        this.prenAct = prenAct;
-    }
-
-    public LocalDate getDateNaiss() {
-        return dateNaiss;
-    }
-
-    public void setDateNaiss(LocalDate dateNaiss) {
-        this.dateNaiss = dateNaiss;
-    }
-
-    public LocalDate getDateDeces() {
-        return dateDeces;
-    }
-
-    public void setDateDeces(LocalDate dateDeces) {
-        this.dateDeces = dateDeces;
-    }
-
 }

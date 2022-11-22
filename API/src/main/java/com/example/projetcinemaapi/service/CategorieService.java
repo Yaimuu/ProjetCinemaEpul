@@ -1,58 +1,57 @@
 package com.example.projetcinemaapi.service;
 
-import com.example.projetcinemaapi.controller.ActeurControlleur;
-import com.example.projetcinemaapi.domains.Acteur;
 import com.example.projetcinemaapi.domains.Categorie;
 import com.example.projetcinemaapi.exception.CategoryCodeAlreadyExistsException;
 import com.example.projetcinemaapi.exception.CategoryNotFoundException;
 import com.example.projetcinemaapi.repository.CategorieRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class CategorieService {
-    CategorieRepository categorieRepository;
-    private final Logger logger = LoggerFactory.getLogger(CategorieService.class);
-    public CategorieService(CategorieRepository cr){
-        categorieRepository = cr;
+
+    private final CategorieRepository categorieRepository;
+
+    public List<Categorie> getAllCategories(){
+        return categorieRepository.findAll();
     }
 
     public Categorie getCategorieById(String id){
-        return categorieRepository.findById(id).orElse(null);
+        return categorieRepository.findById(id).orElseThrow(CategoryNotFoundException::new);
     }
 
-    public void updateCategorie(Categorie categ){
-        Categorie categorieEntity = categorieRepository.findById(categ.getId()).orElseThrow(CategoryNotFoundException::new);
-        categorieEntity.setLibelleCat(categ.getLibelleCat());
-        categorieEntity.setImage(categ.getImage());
-        categorieRepository.save(categorieEntity);
-    }
-
-    public String createCategorie(Categorie categ){
-        if(categ.getId() == null){
-            categ.setId(categ.getLibelleCat().toUpperCase().substring(0,2));
-            while(categorieRepository.existsById(categ.getId())) {
-                Categorie catBase = categorieRepository.findById(categ.getId()).orElse(null);
-                if(!catBase.getLibelleCat().equals(categ.getLibelleCat())){
-                    char catIdChar = (char)((int)categ.getId().charAt(1) + 1);
+    public String createCategorie(Categorie categorie) { // TODO DTO
+        if (categorie.getId() == null) { // TODO repasser sur la fonction
+            categorie.setId(categorie.getLibelleCat().toUpperCase().substring(0,2));
+            while(categorieRepository.existsById(categorie.getId())) {
+                Categorie catBase = categorieRepository.findById(categorie.getId()).orElse(null);
+                if(!catBase.getLibelleCat().equals(categorie.getLibelleCat())){
+                    char catIdChar = (char)((int)categorie.getId().charAt(1) + 1);
                     if(catIdChar=='[') break;
-                    categ.setId(categ.getId().substring(0,1)+catIdChar);
+                    categorie.setId(categorie.getId().substring(0,1)+catIdChar);
                 }
             }
         }
-        if(!categorieRepository.existsById(categ.getId())){
-           categorieRepository.save(categ);
+        if(!categorieRepository.existsById(categorie.getId())){
+           categorieRepository.save(categorie);
         }
         else{
             throw new CategoryCodeAlreadyExistsException();
         }
-        return categ.getId();
+        return categorie.getId();
     }
 
-    public List<Categorie> getAllCategories(){
-        return categorieRepository.findAll();
+    public void updateCategorie(Categorie categorie) { // TODO DTO
+        Categorie categorieEntity = getCategorieById(categorie.getId());
+
+        categorieEntity.setLibelleCat(categorie.getLibelleCat());
+        categorieEntity.setImage(categorie.getImage());
+
+        categorieRepository.save(categorieEntity);
     }
 }

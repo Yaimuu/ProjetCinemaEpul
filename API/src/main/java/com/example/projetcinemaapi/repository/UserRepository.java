@@ -1,6 +1,6 @@
 package com.example.projetcinemaapi.repository;
 
-import com.example.projetcinemaapi.domains.User;
+import com.example.projetcinemaapi.domains.auth.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

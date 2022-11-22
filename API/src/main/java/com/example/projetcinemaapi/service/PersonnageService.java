@@ -1,8 +1,11 @@
 package com.example.projetcinemaapi.service;
 
 import com.example.projetcinemaapi.domains.Personnage;
+import com.example.projetcinemaapi.domains.PersonnageId;
 import com.example.projetcinemaapi.exception.PersonnageNotFoundException;
 import com.example.projetcinemaapi.repository.PersonnageRepository;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,12 +21,11 @@ public class PersonnageService {
         return personnageRepository.findAll();
     }
 
-    public Personnage getById(int id) {
+    public Personnage getById(PersonnageId id) {
         return personnageRepository.findById(id).orElseThrow(PersonnageNotFoundException::new);
     }
 
-    public void removeById(int id) {
+    public void removeById(PersonnageId id) {
         personnageRepository.deleteById(id);
     }
-
 }
