@@ -1,7 +1,8 @@
 package com.example.projetcinemaapi.security;
 
 import com.example.projetcinemaapi.service.JwtUserDetailsService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -26,15 +27,14 @@ import static com.example.projetcinemaapi.tools.Constants.AUTH_ROUTE;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
+@AllArgsConstructor
+@NoArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
-    @Autowired
     private JwtUserDetailsService jwtUserDetailsService;
-    @Autowired
     private JwtRequestFilter jwtRequestFilter;
-    @Autowired
+
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 
         // On configure AuthenticationManager pour qu'il sache où charger
@@ -70,12 +70,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         // ajouter un filtre pour valider le jeton avec chaque requête
-        httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+        httpSecurity.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
 
        // httpSecurity.exceptionHandling().accessDeniedPage("/authentification/authenticate");
     }
 
-
+    public JwtRequestFilter authenticationTokenFilterBean() {
+        return new JwtRequestFilter();
+    }
 
     @Override
     public void configure(WebSecurity web) {

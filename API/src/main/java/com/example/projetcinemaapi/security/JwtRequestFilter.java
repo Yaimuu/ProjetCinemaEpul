@@ -2,7 +2,9 @@ package com.example.projetcinemaapi.security;
 
 import com.example.projetcinemaapi.service.JwtUserDetailsService;
 import io.jsonwebtoken.ExpiredJwtException;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,11 +19,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
+@AllArgsConstructor
+@NoArgsConstructor
 public class JwtRequestFilter extends OncePerRequestFilter {
 
-    @Autowired
     private JwtUserDetailsService jwtUserDetailsService;
-    @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
     @Override

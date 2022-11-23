@@ -1,7 +1,9 @@
 package com.example.projetcinemaapi.service;
 
 import com.example.projetcinemaapi.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -11,21 +13,17 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 
 @Service
+@NoArgsConstructor
+@AllArgsConstructor
 public class JwtUserDetailsService implements UserDetailsService {
 
-    private UserRepository userRepostory;
-
-    // on initialise
-    @Autowired
-    public JwtUserDetailsService(UserRepository UtilisateurRepostory) {
-        this.userRepostory = UtilisateurRepostory;
-    }
+    private UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         com.example.projetcinemaapi.domains.User unUtilisateur = null;
         // on accède à l'utilisateur
-        unUtilisateur = userRepostory.rechercheNom(username);
+        unUtilisateur = userRepository.findByLogin(username).orElse(null);
         if (unUtilisateur != null) {
             return new User(unUtilisateur.getLogin(), unUtilisateur.getPassword(),
                     new ArrayList<>());

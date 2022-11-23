@@ -5,7 +5,7 @@ import com.example.projetcinemaapi.repository.UserRepository;
 import com.example.projetcinemaapi.security.JwtTokenUtil;
 import com.example.projetcinemaapi.security.requests.JwtResponse;
 import com.example.projetcinemaapi.service.JwtUserDetailsService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -17,26 +17,16 @@ import org.springframework.web.bind.annotation.*;
 
 import static com.example.projetcinemaapi.tools.Constants.AUTH_ROUTE;
 
-@RequestMapping("/" + AUTH_ROUTE)
 @RestController
+@RequiredArgsConstructor
 @CrossOrigin
+@RequestMapping("/" + AUTH_ROUTE)
 public class JwtAuthenticationController {
 
     private final AuthenticationManager authenticationManager;
     private final JwtTokenUtil jwtTokenUtil;
-    private final JwtUserDetailsService userDetailsService;
 
-    private UserRepository userRepository;
-
-    // on initialise
-    @Autowired
-    public JwtAuthenticationController(AuthenticationManager authenticationManager, JwtTokenUtil jwtTokenUtil, JwtUserDetailsService userDetailsService, UserRepository userRepository) {
-        this.authenticationManager = authenticationManager;
-        this.jwtTokenUtil = jwtTokenUtil;
-        this.userDetailsService = userDetailsService;
-        this.userRepository = userRepository;
-    }
-    // auhentification  qui va généré un jeton
+    // authentification qui va générer un jeton
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody User unUti)
             throws Exception {
@@ -59,12 +49,11 @@ public class JwtAuthenticationController {
 
     // Demande d'authentification à l'aide de l'objet instancié précédemment
     // La méthode authenticate() appellera la méthode loadUserByUsername() de la classe UserDetailsServiceImpl
-    // L'objet autentication contiendra l'objet userDetails dans la propriété principal
+    // L'objet authentication contiendra l'objet userDetails dans la propriété principal
     private UserDetails appelAuthentication(String username, String password) throws Exception {
 
         try {
-            Authentication  authentication = authenticationManager.
-                    authenticate(new UsernamePasswordAuthenticationToken(username, password));
+            Authentication  authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
             return userDetails;
         } catch (DisabledException e) {

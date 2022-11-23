@@ -4,7 +4,6 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "user")
-@NamedQuery(name = "User.rechercheNom", query = "select ut  from User  ut where ut.login = ?1")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
