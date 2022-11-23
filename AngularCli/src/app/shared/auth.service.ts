@@ -25,7 +25,7 @@ export class AuthService {
         {
           next: jwt => {
             localStorage.setItem('access_token', jwt.accessToken);
-            this.getUser(user.username!).subscribe((userRes) => {
+            this.getUser(user.login!).subscribe((userRes) => {
               localStorage.setItem('currentUser', JSON.stringify(userRes));
               //TODO route à redéfinir, mais on redirigera pas dans la même page selon le role
               const route = userRes.role === 'ADMIN' ? 'admin' : 'home';
