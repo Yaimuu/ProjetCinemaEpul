@@ -3,7 +3,6 @@ package com.example.projetcinemaapi.service;
 import com.example.projetcinemaapi.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,7 +14,7 @@ import java.util.ArrayList;
 @Service
 @NoArgsConstructor
 @AllArgsConstructor
-public class JwtUserDetailsService implements UserDetailsService {
+public class AuthService implements UserDetailsService {
 
     private UserRepository userRepository;
 
