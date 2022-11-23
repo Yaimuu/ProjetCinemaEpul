@@ -1,15 +1,15 @@
 package com.example.projetcinemaapi.domains;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "personnage")
 @Getter
-@Setter
 @ToString
 public class Personnage {
     @EmbeddedId
@@ -25,6 +25,7 @@ public class Personnage {
     @JoinColumn(name = "NoAct", nullable = false)
     private Acteur noAct;
 
+    @Setter
     @Column(name = "NomPers", nullable = false, length = 30)
     private String nomPers;
 }

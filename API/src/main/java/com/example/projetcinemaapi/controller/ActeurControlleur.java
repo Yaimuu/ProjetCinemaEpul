@@ -1,6 +1,7 @@
 package com.example.projetcinemaapi.controller;
 
 import com.example.projetcinemaapi.domains.Acteur;
+import com.example.projetcinemaapi.domains.request.ActeurRequest;
 import com.example.projetcinemaapi.service.ActeurService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -35,16 +36,16 @@ public class ActeurControlleur {
     }
 
     @PostMapping("/create")
-    public ResponseEntity createActor(@RequestBody Acteur acteur) { // TODO make DTO for create
-        logger.info(this.getClass().getSimpleName() + " createActor" + acteur.toString());
-        acteurService.createActeur(acteur);
+    public ResponseEntity createActor(@RequestBody ActeurRequest request) {
+        logger.info(this.getClass().getSimpleName() + " createActor " + request.toString());
+        acteurService.createActeur(request);
         return ResponseEntity.ok("Acteur créé");
     }
 
-    @PostMapping("/update")
-    public ResponseEntity updateActor(@RequestBody Acteur acteur) { // TODO make DTO for update
-        logger.info(this.getClass().getSimpleName() + " updateActor" + acteur.toString());
-        acteurService.updateActeur(acteur);
+    @PostMapping("/update/{id}")
+    public ResponseEntity updateActor(@PathVariable int id, @RequestBody ActeurRequest acteur) {
+        logger.info(this.getClass().getSimpleName() + " updateActor " + acteur.toString());
+        acteurService.updateActeur(id, acteur);
         return ResponseEntity.ok("Acteur mis à jour");
     }
 }

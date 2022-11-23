@@ -1,6 +1,6 @@
 package com.example.projetcinemaapi.controller;
 
-import com.example.projetcinemaapi.domains.Film;
+import com.example.projetcinemaapi.domains.request.FilmRequest;
 import com.example.projetcinemaapi.service.FilmService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -31,18 +31,22 @@ public class FilmController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity createFilm(@RequestBody Film film) { // TODO make DTO for create
+    public ResponseEntity createFilm(@RequestBody FilmRequest film) {
         logger.info(this.getClass().getSimpleName() + " createFilm" + film.toString());
         filmService.createFilm(film);
         return ResponseEntity.ok("Film créé");
     }
 
-    @PostMapping("/update")
-    public ResponseEntity updateFilm(@RequestBody Film film) { // TODO make DTO for update
+    @PostMapping("/update/{id}")
+    public ResponseEntity updateFilm(@PathVariable int id, @RequestBody FilmRequest film) {
         logger.info(this.getClass().getSimpleName() + " updateFilm" + film.toString());
-        filmService.updateFilm(film);
+        filmService.updateFilm(id, film);
         return ResponseEntity.ok("Film mis à jour");
     }
 
-    // TODO add removeFilm
+    @DeleteMapping("/delete/{id}")
+    public void deleteFilm(@PathVariable int id) {
+        logger.info(this.getClass().getSimpleName() + " deleteFilm(" + id + ")");
+        filmService.removeFilm(id);
+    }
 }

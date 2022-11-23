@@ -1,7 +1,7 @@
 package com.example.projetcinemaapi.controller;
 
-import com.example.projetcinemaapi.domains.Personnage;
 import com.example.projetcinemaapi.domains.PersonnageId;
+import com.example.projetcinemaapi.domains.request.PersonnageRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,20 +28,25 @@ public class PersonnageController {
         return ResponseEntity.ok(personnageService.getAll());
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity getPersonnage(@PathVariable PersonnageId id) {
-        logger.info(this.getClass().getSimpleName() + " getPersonnage(" + id + ")");
-        return ResponseEntity.ok(personnageService.getById(id));
+    @GetMapping("/id")
+    public ResponseEntity getPersonnage(@RequestBody PersonnageRequest request) {
+        logger.info(this.getClass().getSimpleName() + " getPersonnage " + request);
+        return ResponseEntity.ok(personnageService.getPersonnage(request));
     }
 
-    // TODO la clé primaire id n'est pas un int mais une clé composée
-    //  donc chiant faut faire gaffe
-    /*@PutMapping
-    public ResponseEntity updatePersonnage(@RequestBody Personnage personnage) { // TODO DTO
-        logger.info("REST PUT updatePersonnage with id : {}", );
-        personnageService.update(personnage);
-        return ResponseEntity.noContent().build();
-    }*/
+    @PostMapping("/create")
+    public ResponseEntity createPersonnage(@RequestBody PersonnageRequest request) {
+        logger.info(this.getClass().getSimpleName() + " createPersonnage " + request);
+        personnageService.create(request);
+        return ResponseEntity.ok("Personnage créé");
+    }
+
+    @PostMapping("/update")
+    public ResponseEntity updatePersonnage(@RequestBody PersonnageRequest request) {
+        logger.info(this.getClass().getSimpleName() + " updatePersonnage " + request);
+        personnageService.update(request);
+        return ResponseEntity.ok("Personnage mis à jour");
+    }
 
     @DeleteMapping
     public ResponseEntity removePersonnage(@RequestBody PersonnageId id) {
