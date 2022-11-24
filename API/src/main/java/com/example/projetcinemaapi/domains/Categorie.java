@@ -1,5 +1,9 @@
 package com.example.projetcinemaapi.domains;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -7,6 +11,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "categorie")
+@Getter
+@Setter
+@ToString
 public class Categorie {
     @Id
     @Column(name = "CodeCat", nullable = false, length = 2)
@@ -17,29 +24,4 @@ public class Categorie {
 
     @Column(name = "image", nullable = false, length = 50)
     private String image;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getLibelleCat() {
-        return libelleCat;
-    }
-
-    public void setLibelleCat(String libelleCat) {
-        this.libelleCat = libelleCat;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
 }
