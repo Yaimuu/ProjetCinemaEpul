@@ -1,14 +1,19 @@
 package com.example.projetcinemaapi.domains;
 
+import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.Entity;
 import java.io.Serializable;
 import java.util.Objects;
 
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Embeddable
+@Getter
+@Setter
 public class PersonnageId implements Serializable {
     private static final long serialVersionUID = 7115333595764153627L;
     @Column(name = "NoFilm", nullable = false)
@@ -16,22 +21,6 @@ public class PersonnageId implements Serializable {
 
     @Column(name = "NoAct", nullable = false)
     private Integer noAct;
-
-    public Integer getNoFilm() {
-        return noFilm;
-    }
-
-    public void setNoFilm(Integer noFilm) {
-        this.noFilm = noFilm;
-    }
-
-    public Integer getNoAct() {
-        return noAct;
-    }
-
-    public void setNoAct(Integer noAct) {
-        this.noAct = noAct;
-    }
 
     @Override
     public boolean equals(Object o) {

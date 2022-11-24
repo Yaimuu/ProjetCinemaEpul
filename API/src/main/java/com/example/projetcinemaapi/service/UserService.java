@@ -1,6 +1,6 @@
 package com.example.projetcinemaapi.service;
 
-import com.example.projetcinemaapi.domains.User;
+import com.example.projetcinemaapi.domains.auth.User;
 import com.example.projetcinemaapi.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

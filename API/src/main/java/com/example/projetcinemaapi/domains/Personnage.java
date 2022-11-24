@@ -1,9 +1,16 @@
 package com.example.projetcinemaapi.domains;
 
+import lombok.*;
+
 import javax.persistence.*;
 
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "personnage")
+@Getter
+@ToString
 public class Personnage {
     @EmbeddedId
     private PersonnageId id;
@@ -18,39 +25,7 @@ public class Personnage {
     @JoinColumn(name = "NoAct", nullable = false)
     private Acteur noAct;
 
+    @Setter
     @Column(name = "NomPers", nullable = false, length = 30)
     private String nomPers;
-
-    public PersonnageId getId() {
-        return id;
-    }
-
-    public void setId(PersonnageId id) {
-        this.id = id;
-    }
-
-    public Film getNoFilm() {
-        return noFilm;
-    }
-
-    public void setNoFilm(Film noFilm) {
-        this.noFilm = noFilm;
-    }
-
-    public Acteur getNoAct() {
-        return noAct;
-    }
-
-    public void setNoAct(Acteur noAct) {
-        this.noAct = noAct;
-    }
-
-    public String getNomPers() {
-        return nomPers;
-    }
-
-    public void setNomPers(String nomPers) {
-        this.nomPers = nomPers;
-    }
-
 }

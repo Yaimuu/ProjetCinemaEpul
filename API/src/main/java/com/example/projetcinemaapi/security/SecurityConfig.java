@@ -19,6 +19,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import static com.example.projetcinemaapi.tools.Constants.AUTH_ROUTE;
+
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -33,7 +35,7 @@ public class SecurityConfig {
         return http.csrf().disable()
                 .cors()
                 .and()
-                .authorizeRequests().antMatchers("/auth/login").permitAll()
+                .authorizeRequests().antMatchers("/" + AUTH_ROUTE + "/login").permitAll()
                 .and()
                 .authorizeRequests()
                 .antMatchers("/import", "/export", "/close", "/drop").hasRole("ADMIN")
@@ -66,7 +68,7 @@ public class SecurityConfig {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().antMatchers("/auth/login");
+        return (web) -> web.ignoring().antMatchers("/" + AUTH_ROUTE + "/login");
     }
 
 }
