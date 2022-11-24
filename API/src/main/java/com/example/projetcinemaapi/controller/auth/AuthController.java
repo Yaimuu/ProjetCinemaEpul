@@ -40,7 +40,7 @@ public class AuthController {
         String refreshToken = authorization.substring("Bearer ".length());
         String username = jwtTokenUtil.getUserName(refreshToken);
         User user = userService.getUserByUsername(username);
-        String accessToken = jwtTokenUtil.generateAccessToken(user.getId(), "ROLE_" + user.getRole());
+        String accessToken = jwtTokenUtil.generateAccessToken(user.getLogin(), "ROLE_" + user.getRole());
         return ResponseEntity.ok(new JwtResponse(accessToken, refreshToken));
     }
 
