@@ -20,7 +20,7 @@ export class AuthService {
 
   signIn(user: User) {
     return this.http
-      .post<JwtResponse>(`${environment.baseUrl}/Authentication/login`, user)
+      .post<JwtResponse>(`${environment.baseUrl}/auth/login`, user)
       .subscribe(
         {
           next: jwt => {

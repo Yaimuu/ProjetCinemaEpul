@@ -9,15 +9,15 @@
       <nav>
         <ul>
           <li>
-            <a href="/films">Films</a>
+            <a *ngIf="this.authService.isLoggedIn" href="/films">Films</a>
           </li>
 
           <li>
-            <a href="/acteurs">Acteurs</a>
+            <a *ngIf="this.authService.isLoggedIn" href="/acteurs">Acteurs</a>
           </li>
 
           <li>
-            <a href="/login">Login</a>
+            <a *ngIf="!this.authService.isLoggedIn" href="/login">Login</a>
           </li>
 
           <li>

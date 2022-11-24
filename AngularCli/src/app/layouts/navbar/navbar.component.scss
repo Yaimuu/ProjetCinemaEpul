@@ -4,6 +4,11 @@ header {
   margin-bottom: 0.5em;
   background-color: #4285F4;
   color: white;
+
+  a {
+    color: white;
+    text-decoration: none;
+  }
 }
 
 .navbar {
@@ -20,27 +25,27 @@ header {
   display: flex;
   align-items: center;
   gap: 20px;
-
-
 }
 
 p {
   margin-bottom: 0;
 }
 
-a {
-  color: white;
-}
+nav {
+  ul {
+    display: flex;
+    padding: 0;
+    margin-left: 1em;
 
-nav > ul {
-  display: flex;
-  padding: 0;
-  margin-left: 1em;
-}
+    li {
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
-nav > ul > li {
-  list-style: none;
-  margin-right: 0.5em;
+      list-style: none;
+      margin-right: 0.5em;
+    }
+  }
 }
 
 .title {
