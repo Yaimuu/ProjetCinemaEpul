@@ -1,1 +1,31 @@
-<p>login works!</p>
+<mat-card>
+  <mat-card-title>Connexion</mat-card-title>
+  <mat-card-content>
+    <form class="form-signin" [formGroup]="loginForm" (ngSubmit)="loginUser()">
+      <p class="input-line">
+        <mat-icon color="primary" fontIcon="person-filled"></mat-icon>
+        <mat-form-field>
+          <input type="text" matInput placeholder="Identifiant" formControlName="login">
+        </mat-form-field>
+      </p>
+
+      <p class="input-line">
+        <mat-icon color="primary" fontIcon="password"></mat-icon>
+        <mat-form-field>
+          <input type="password" matInput placeholder="Mot de passe" formControlName="password">
+        </mat-form-field>
+      </p>
+
+
+      <div class="button">
+        <button type="submit" color="primary" mat-raised-button>Se connecter</button>
+      </div>
+
+      <p *ngIf="(error$ | async) as error" class="error">
+        {{ error }}
+      </p>
+
+    </form>
+  </mat-card-content>
+</mat-card>
+
