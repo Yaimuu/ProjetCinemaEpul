@@ -1,7 +1,7 @@
 package com.example.projetcinemaapi.controller.auth;
 
 import com.example.projetcinemaapi.domains.auth.User;
-import com.example.projetcinemaapi.security.jwt.JwtUtil;
+import com.example.projetcinemaapi.security.jwt.JwtTokenUtil;
 import com.example.projetcinemaapi.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -11,8 +11,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.logging.Logger;
-
 import static com.example.projetcinemaapi.tools.Constants.AUTH_ROUTE;
 
 @RequestMapping("/" + AUTH_ROUTE)
@@ -21,7 +19,7 @@ import static com.example.projetcinemaapi.tools.Constants.AUTH_ROUTE;
 public class AuthController {
 
     private final AuthenticationManager authenticationManager;
-    private final JwtUtil jwtTokenUtil;
+    private final JwtTokenUtil jwtTokenUtil;
     private final UserService userService;
 
     @PostMapping("/login")
