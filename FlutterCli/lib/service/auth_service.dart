@@ -11,9 +11,9 @@ class AuthService {
 
   AuthService._internal();
 
-  bool isAuthenticated() {
-    bool authenticated = _storage.containsKey(key: "jwtToken") == true;
-    return authenticated;
+  Future<bool> isAuthenticated() async {
+    return await _storage.containsKey(key: "jwtToken");
+
   }
 
   void logout() {

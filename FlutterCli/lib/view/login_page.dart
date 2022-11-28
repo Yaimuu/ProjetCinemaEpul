@@ -19,10 +19,6 @@ Future<LoginResponse> loginUser(LoginRequest loginRequest) async {
       'Content-Type': 'application/json',
     },
     body: json.encode(loginRequest.toJson()),
-    // body: jsonEncode(<String, String>{
-    //   'login': loginRequest.login,
-    //   'password': loginRequest.password,
-    // }),
   );
 
   developer.log(response.statusCode.toString());
@@ -121,6 +117,10 @@ class _LoginPageState extends State<LoginPage> {
         onPressed: () {
           //Navigator.of(context).pushNamed(HomePage.tag);
           _futureLoginResponse = loginUser(LoginRequest(login: loginController.text, password: passwordController.text));
+          if(_futureLoginResponse != null)
+          {
+            Navigator.of(context).pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);
+          }
         },
         child: const Text('Log In', style: TextStyle(color: Colors.white)),
       ),
@@ -133,7 +133,6 @@ class _LoginPageState extends State<LoginPage> {
       ),
       onPressed: () {},
     );
-
 
     return Scaffold(
       appBar: AppBar(
