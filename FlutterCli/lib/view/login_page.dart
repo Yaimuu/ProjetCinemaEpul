@@ -1,51 +1,15 @@
-import 'dart:convert';
 import 'dart:developer' as developer;
 
 import 'package:flutter/material.dart';
-import 'package:flutter_cli/models/login_request.dart';
-import 'package:flutter_cli/models/login_response.dart';
+import 'package:flutter_cli/models/requests/login_request.dart';
+import 'package:flutter_cli/service/auth_service.dart';
 import 'package:flutter_cli/view/widgets/menu.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:http/http.dart' as http;
-
-import '../constants.dart';
-
-Future<LoginResponse> loginUser(LoginRequest loginRequest) async {
-  developer.log(loginRequest.toJson().toString());
-  developer.log('${Constants.urlAPI}auth/login');
-  final response = await http.post(
-    Uri.parse('${Constants.urlAPI}auth/login'),
-    headers: <String, String>{
-      'Content-Type': 'application/json',
-    },
-    body: json.encode(loginRequest.toJson()),
-  );
-
-  developer.log(response.statusCode.toString());
-  developer.log(response.body.toString());
-
-  if (response.statusCode == 200) {
-    LoginResponse jsonResponse = LoginResponse.fromJson(jsonDecode(response.body));
-
-    const storage = FlutterSecureStorage();
-    await storage.write(key: 'jwtToken', value: jsonResponse.jwtToken);
-    await storage.write(key: 'refreshToken', value: jsonResponse.refreshToken);
-
-    // If the server did return a 201 CREATED response,
-    // then parse the JSON.
-    return jsonResponse;
-  } else {
-    // If the server did not return a 201 CREATED response,
-    // then throw an exception.
-    throw Exception('Failed to connect.');
-  }
-}
+import '../models/requests/login_response.dart';
 
 class LoginPage extends StatefulWidget {
   final String title;
 
   const LoginPage({super.key, required this.title});
-
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -62,7 +26,7 @@ class _LoginPageState extends State<LoginPage> {
     final loginController = TextEditingController(text: "Merlot");
     final passwordController = TextEditingController(text: "secret");
 
-    late Future<LoginResponse>? _futureLoginResponse;
+    late LoginResponse _futureLoginResponse;
 
     @override
     void dispose() {
@@ -114,13 +78,18 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ),
 
-        onPressed: () {
+        onPressed: () async {
           //Navigator.of(context).pushNamed(HomePage.tag);
-          _futureLoginResponse = loginUser(LoginRequest(login: loginController.text, password: passwordController.text));
-          if(_futureLoginResponse != null)
+
+
+
+          _futureLoginResponse = await AuthService().loginUser(LoginRequest(login: loginController.text, password: passwordController.text));
+
+          if(_futureLoginResponse.jwtToken.isNotEmpty)
           {
             Navigator.of(context).pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);
           }
+
         },
         child: const Text('Log In', style: TextStyle(color: Colors.white)),
       ),

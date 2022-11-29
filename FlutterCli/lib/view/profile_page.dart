@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cli/service/auth_service.dart';
 import 'package:flutter_cli/view/widgets/menu.dart';
+import 'dart:developer' as developer;
+
+import '../models/user.dart';
 
 class ProfilePage extends StatefulWidget {
   final String title;
 
   const ProfilePage({super.key, required this.title});
+
 
 
   @override
@@ -13,6 +18,7 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -21,7 +27,28 @@ class _ProfilePageState extends State<ProfilePage> {
         title: Text(widget.title),
       ),
       drawer: NavDrawer(title:widget.title),
+      body: FutureBuilder(
+        future: AuthService().getAuthenticatedUser(),
+        builder: (context, AsyncSnapshot<User> snapshot) {
+          if(snapshot.hasData)
+          {
+            developer.log(snapshot.data.toString());
+            return ListView(
+                children: [
+                  Center(
+                    child: Text(
+                      "Bienvenue ${snapshot.data!.login}",
+                      style: TextStyle(
 
+                      ),
+                    ),
+                  ),
+                ],
+              );
+          }
+          return const Text("Not authenticated");
+        },
+      ),
     );
   }
 
