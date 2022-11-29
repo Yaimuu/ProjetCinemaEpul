@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {User} from "../model/user.model";
 import {BehaviorSubject, Observable} from "rxjs";
 import {Router} from "@angular/router";
@@ -52,4 +52,9 @@ export class AuthService {
     let api = `${environment.baseUrl}/users/${id}`;
     return this.http.get<User>(api);
   }
+
+  public getTokenHeader(): HttpHeaders {
+    return new HttpHeaders().set('Authorization', 'Bearer ' + this.getToken());
+  }
+
 }
