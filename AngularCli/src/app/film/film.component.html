@@ -1,0 +1,34 @@
+<table [dataSource]="dataSource" mat-table matSort>
+  <ng-container matColumnDef="id">
+    <th *matHeaderCellDef mat-header-cell mat-sort-header=""> ID</th>
+    <td *matCellDef="let row" mat-cell> {{row.id}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="titre">
+    <th *matHeaderCellDef mat-header-cell mat-sort-header> Titre</th>
+    <td *matCellDef="let row" mat-cell> {{row.titre}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="duree">
+    <th *matHeaderCellDef mat-header-cell mat-sort-header> Duree</th>
+    <td *matCellDef="let row" mat-cell> {{row.duree}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="dateSortie">
+    <th *matHeaderCellDef mat-header-cell mat-sort-header> Date de sortie</th>
+    <td *matCellDef="let row" mat-cell> {{row.dateSortie}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="budget">
+    <th *matHeaderCellDef mat-header-cell mat-sort-header> Budget</th>
+    <td *matCellDef="let row" mat-cell> {{row.budget}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="montantRecette">
+    <th *matHeaderCellDef mat-header-cell mat-sort-header> Montant recette</th>
+    <td *matCellDef="let row" mat-cell> {{row.montantRecette}} </td>
+  </ng-container>
+
+  <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+  <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+</table>
