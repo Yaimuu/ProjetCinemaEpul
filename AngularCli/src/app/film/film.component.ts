@@ -3,6 +3,7 @@ import {FilmService} from "../services/film.service";
 import {HttpResponse} from "@angular/common/http";
 import {Film} from "../model/film.model";
 import {MatTableDataSource} from "@angular/material/table";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-film',
@@ -12,9 +13,9 @@ import {MatTableDataSource} from "@angular/material/table";
 export class FilmComponent implements OnInit {
 
   dataSource: MatTableDataSource<Film> = new MatTableDataSource<Film>();
-  displayedColumns: string[] = ['titre', 'duree', 'dateSortie', 'budget', 'montantRecette'];
+  displayedColumns: string[] = ['titre', 'duree', 'dateSortie', 'budget', 'montantRecette', 'modifier', 'supprimer'];
 
-  constructor(private filmService: FilmService) {
+  constructor(private filmService: FilmService, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -26,6 +27,10 @@ export class FilmComponent implements OnInit {
         this.dataSource.data = response.body;
       }
     })
+  }
+
+  modifier(id: number) {
+    this.router.navigate(['/films/edit/' + id]);
   }
 
 }

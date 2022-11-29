@@ -1,3 +1,5 @@
+<h1>Films</h1>
+
 <table [dataSource]="dataSource" mat-table matSort>
   <ng-container matColumnDef="id">
     <th *matHeaderCellDef mat-header-cell mat-sort-header=""> ID</th>
@@ -10,23 +12,33 @@
   </ng-container>
 
   <ng-container matColumnDef="duree">
-    <th *matHeaderCellDef mat-header-cell mat-sort-header> Duree</th>
+    <th *matHeaderCellDef mat-header-cell mat-sort-header> Duree (minutes)</th>
     <td *matCellDef="let row" mat-cell> {{row.duree}} </td>
   </ng-container>
 
   <ng-container matColumnDef="dateSortie">
     <th *matHeaderCellDef mat-header-cell mat-sort-header> Date de sortie</th>
-    <td *matCellDef="let row" mat-cell> {{row.dateSortie}} </td>
+    <td *matCellDef="let row" mat-cell> {{row.dateSortie | date:'d MMMM y'}} </td>
   </ng-container>
 
   <ng-container matColumnDef="budget">
-    <th *matHeaderCellDef mat-header-cell mat-sort-header> Budget</th>
+    <th *matHeaderCellDef mat-header-cell mat-sort-header> Budget (€)</th>
     <td *matCellDef="let row" mat-cell> {{row.budget}} </td>
   </ng-container>
 
   <ng-container matColumnDef="montantRecette">
-    <th *matHeaderCellDef mat-header-cell mat-sort-header> Montant recette</th>
+    <th *matHeaderCellDef mat-header-cell mat-sort-header> Montant recette (€)</th>
     <td *matCellDef="let row" mat-cell> {{row.montantRecette}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="modifier">
+    <th *matHeaderCellDef mat-header-cell></th>
+    <td *matCellDef="let row" mat-cell> <button mat-raised-button color="accent" (click)="modifier(row.id)">Modifier</button> </td>
+  </ng-container>
+
+  <ng-container matColumnDef="supprimer">
+    <th *matHeaderCellDef mat-header-cell></th>
+    <td *matCellDef="let row" mat-cell> <button mat-raised-button color="warn" (click)="modifier(row.id)">Supprimer</button> </td>
   </ng-container>
 
   <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>

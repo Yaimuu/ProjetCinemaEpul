@@ -29,7 +29,6 @@ import {MatSortModule} from "@angular/material/sort";
     FooterComponent,
     HomeComponent,
     LoginComponent,
-    FilmComponent,
     ActeurComponent
   ],
   imports: [

@@ -15,4 +15,8 @@ export class FilmService {
   public getFilms(): Observable<HttpResponse<Film[]>> {
     return this.http.get<Film[]>(`${environment.baseUrl}/films`, {observe: "response", headers: this.auth.getTokenHeader()})
   }
+
+  public getFilm(id: number): Observable<HttpResponse<Film>> {
+    return this.http.get<Film>(`${environment.baseUrl}/films/` + id, {observe: "response", headers: this.auth.getTokenHeader()})
+  }
 }
