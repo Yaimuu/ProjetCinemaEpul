@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {FilmService} from "../services/film.service";
 import {HttpResponse} from "@angular/common/http";
 import {Film} from "../model/film.model";
-import {MatTableDataSource} from "@angular/material/table";
 import {Router} from "@angular/router";
 
 @Component({
@@ -12,7 +11,8 @@ import {Router} from "@angular/router";
 })
 export class FilmComponent implements OnInit {
 
-  dataSource: MatTableDataSource<Film> = new MatTableDataSource<Film>();
+  step = -1;
+  films: Film[] = [];
   displayedColumns: string[] = ['titre', 'duree', 'dateSortie', 'budget', 'montantRecette', 'modifier', 'supprimer'];
 
   constructor(private filmService: FilmService, private router: Router) {
@@ -24,7 +24,7 @@ export class FilmComponent implements OnInit {
         if (!response.ok || !response.body) {
           throw new Error('Erreur lors du chargement des films');
         }
-        this.dataSource.data = response.body;
+        this.films = response.body;
       }
     })
   }
@@ -33,4 +33,20 @@ export class FilmComponent implements OnInit {
     this.router.navigate(['/films/edit/' + id]);
   }
 
+  supprimer(id: number) {
+    this.filmService.deleteFilm(id);
+    this.router.navigate(['/films']);
+  }
+
+  setStep(index: number) {
+    this.step = index;
+  }
+
+  nextStep() {
+    this.step++;
+  }
+
+  prevStep() {
+    this.step--;
+  }
 }

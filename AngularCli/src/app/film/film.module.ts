@@ -13,6 +13,7 @@ import {MatSortModule} from "@angular/material/sort";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatIconModule} from "@angular/material/icon";
 import {MatMenuModule} from "@angular/material/menu";
+import {MatExpansionModule} from "@angular/material/expansion";
 
 @NgModule({
   declarations: [
@@ -22,21 +23,22 @@ import {MatMenuModule} from "@angular/material/menu";
   exports: [
 
   ],
-  imports: [
-    CommonModule,
-    FilmRoutingModule,
-    MatInputModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatButtonModule,
-    MatDividerModule,
-    MatDialogModule,
-    MatTableModule,
-    MatSortModule,
-    MatPaginatorModule,
-    MatIconModule,
-    MatMenuModule
-  ]
+    imports: [
+        CommonModule,
+        FilmRoutingModule,
+        MatInputModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatButtonModule,
+        MatDividerModule,
+        MatDialogModule,
+        MatTableModule,
+        MatSortModule,
+        MatPaginatorModule,
+        MatIconModule,
+        MatMenuModule,
+        MatExpansionModule
+    ]
 })
 export class FilmModule {
 }

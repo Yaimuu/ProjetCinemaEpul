@@ -1,46 +1,34 @@
 <h1>Films</h1>
 
-<table [dataSource]="dataSource" mat-table matSort>
-  <ng-container matColumnDef="id">
-    <th *matHeaderCellDef mat-header-cell mat-sort-header=""> ID</th>
-    <td *matCellDef="let row" mat-cell> {{row.id}} </td>
-  </ng-container>
+<mat-accordion class="example-headers-align">
+  <mat-expansion-panel *ngFor="let film of films; let i = index" [expanded]="step === i" (opened)="setStep(i)" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{film.titre}}
+      </mat-panel-title>
+      <mat-panel-description>
+        Date de sortie : {{film.dateSortie | date:'d MMMM y'}}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
 
-  <ng-container matColumnDef="titre">
-    <th *matHeaderCellDef mat-header-cell mat-sort-header> Titre</th>
-    <td *matCellDef="let row" mat-cell> {{row.titre}} </td>
-  </ng-container>
+    <p>Durée : {{film.duree}} minutes</p>
+    <p>Budget : {{film.budget}}€</p>
+    <p>Montant recette : {{film.montantRecette}}€</p>
 
-  <ng-container matColumnDef="duree">
-    <th *matHeaderCellDef mat-header-cell mat-sort-header> Duree (minutes)</th>
-    <td *matCellDef="let row" mat-cell> {{row.duree}} </td>
-  </ng-container>
+    <mat-action-row>
+      <div class="action-button action-button-start">
+        <button *ngIf="i > 0" aria-labelledby="up" mat-button color="warn" (click)="prevStep()">
+          <mat-icon aria-hidden="false" aria-label="up" fontIcon="keyboard_arrow_up"></mat-icon>
+        </button>
+        <button *ngIf="i < films.length - 1" aria-labelledby="down" mat-button color="primary" (click)="nextStep()">
+          <mat-icon aria-hidden="false" aria-label="down" fontIcon="keyboard_arrow_down"></mat-icon>
+        </button>
+      </div>
+      <div class="action-button action-button-end">
+        <button mat-raised-button color="accent" (click)="modifier(film.id)">Modifier</button>
+        <button mat-raised-button color="warn" (click)="supprimer(film.id)">Supprimer</button>
+      </div>
+    </mat-action-row>
+  </mat-expansion-panel>
 
-  <ng-container matColumnDef="dateSortie">
-    <th *matHeaderCellDef mat-header-cell mat-sort-header> Date de sortie</th>
-    <td *matCellDef="let row" mat-cell> {{row.dateSortie | date:'d MMMM y'}} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="budget">
-    <th *matHeaderCellDef mat-header-cell mat-sort-header> Budget (€)</th>
-    <td *matCellDef="let row" mat-cell> {{row.budget}} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="montantRecette">
-    <th *matHeaderCellDef mat-header-cell mat-sort-header> Montant recette (€)</th>
-    <td *matCellDef="let row" mat-cell> {{row.montantRecette}} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="modifier">
-    <th *matHeaderCellDef mat-header-cell></th>
-    <td *matCellDef="let row" mat-cell> <button mat-raised-button color="accent" (click)="modifier(row.id)">Modifier</button> </td>
-  </ng-container>
-
-  <ng-container matColumnDef="supprimer">
-    <th *matHeaderCellDef mat-header-cell></th>
-    <td *matCellDef="let row" mat-cell> <button mat-raised-button color="warn" (click)="modifier(row.id)">Supprimer</button> </td>
-  </ng-container>
-
-  <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
-  <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
-</table>
+</mat-accordion>

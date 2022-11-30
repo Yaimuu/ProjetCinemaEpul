@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders, HttpResponse} from "@angular/common/http";
+import {HttpClient, HttpResponse} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Film} from "../model/film.model";
 import {environment} from "../../environments/environment";
@@ -18,5 +18,9 @@ export class FilmService {
 
   public getFilm(id: number): Observable<HttpResponse<Film>> {
     return this.http.get<Film>(`${environment.baseUrl}/films/` + id, {observe: "response", headers: this.auth.getTokenHeader()})
+  }
+
+  public deleteFilm(id: number): void {
+    this.http.post<Film>(`${environment.baseUrl}/films/delete/` + id, {headers: this.auth.getTokenHeader()})
   }
 }
