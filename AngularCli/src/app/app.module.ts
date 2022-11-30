@@ -17,6 +17,10 @@ import {MatCardModule} from "@angular/material/card";
 import {ReactiveFormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import { FilmComponent } from './film/film.component';
+import { ActeurComponent } from './acteur/acteur.component';
+import {MatTableModule} from "@angular/material/table";
+import {MatSortModule} from "@angular/material/sort";
 
 @NgModule({
   declarations: [
@@ -24,7 +28,9 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     NavbarComponent,
     FooterComponent,
     HomeComponent,
-    LoginComponent
+    LoginComponent,
+    FilmComponent,
+    ActeurComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +43,9 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     MatCardModule,
     ReactiveFormsModule,
     MatInputModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatTableModule,
+    MatSortModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
