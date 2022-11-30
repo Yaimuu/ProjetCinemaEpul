@@ -15,4 +15,8 @@ export class CategorieService {
   public getCategories(): Observable<HttpResponse<Categorie[]>> {
     return this.http.get<Categorie[]>(`${environment.baseUrl}/categories`, {observe: "response", headers: this.auth.getTokenHeader()})
   }
+
+  public getCategorie(id: string): Observable<HttpResponse<Categorie>> {
+    return this.http.get<Categorie>(`${environment.baseUrl}/categories/` + id, {observe: "response", headers: this.auth.getTokenHeader()})
+  }
 }

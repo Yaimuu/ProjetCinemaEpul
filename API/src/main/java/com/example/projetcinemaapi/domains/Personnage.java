@@ -17,12 +17,14 @@ public class Personnage {
     private PersonnageId id;
 
     @MapsId("noFilm")
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "NoFilm", nullable = false)
     private Film noFilm;
 
     @MapsId("noAct")
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "NoAct", nullable = false)
     private Acteur noAct;
 

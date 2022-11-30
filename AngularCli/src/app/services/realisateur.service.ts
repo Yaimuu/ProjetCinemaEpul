@@ -15,4 +15,8 @@ export class RealisateurService {
   public getRealisateurs(): Observable<HttpResponse<Realisateur[]>> {
     return this.http.get<Realisateur[]>(`${environment.baseUrl}/realisateurs`, {observe: "response", headers: this.auth.getTokenHeader()})
   }
+
+  public getRealisateur(id: number): Observable<HttpResponse<Realisateur>> {
+    return this.http.get<Realisateur>(`${environment.baseUrl}/realisateurs/` + id, {observe: "response", headers: this.auth.getTokenHeader()})
+  }
 }

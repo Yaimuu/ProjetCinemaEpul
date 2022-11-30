@@ -1,9 +1,10 @@
 package com.example.projetcinemaapi.domains;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Builder
 @NoArgsConstructor
@@ -28,7 +29,7 @@ public class Film {
 
     @Setter
     @Column(name = "DateSortie", nullable = false)
-    private LocalDateTime dateSortie;
+    private LocalDate dateSortie;
 
     @Setter
     @Column(name = "Budget", nullable = false)
@@ -39,12 +40,14 @@ public class Film {
     private Integer montantRecette;
 
     @Setter
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "NoRea", nullable = false)
     private Realisateur noRea;
 
     @Setter
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "CodeCat", nullable = false)
     private Categorie codeCat;
 }
