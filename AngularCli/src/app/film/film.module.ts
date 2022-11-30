@@ -14,6 +14,8 @@ import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatIconModule} from "@angular/material/icon";
 import {MatMenuModule} from "@angular/material/menu";
 import {MatExpansionModule} from "@angular/material/expansion";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatSelectModule} from "@angular/material/select";
 
 @NgModule({
   declarations: [
@@ -23,22 +25,24 @@ import {MatExpansionModule} from "@angular/material/expansion";
   exports: [
 
   ],
-    imports: [
-        CommonModule,
-        FilmRoutingModule,
-        MatInputModule,
-        FormsModule,
-        ReactiveFormsModule,
-        MatButtonModule,
-        MatDividerModule,
-        MatDialogModule,
-        MatTableModule,
-        MatSortModule,
-        MatPaginatorModule,
-        MatIconModule,
-        MatMenuModule,
-        MatExpansionModule
-    ]
+  imports: [
+    CommonModule,
+    FilmRoutingModule,
+    MatInputModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatDividerModule,
+    MatDialogModule,
+    MatTableModule,
+    MatSortModule,
+    MatPaginatorModule,
+    MatIconModule,
+    MatMenuModule,
+    MatExpansionModule,
+    MatDatepickerModule,
+    MatSelectModule
+  ]
 })
 export class FilmModule {
 }

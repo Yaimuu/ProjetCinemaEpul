@@ -3,3 +3,9 @@
   flex-direction: column;
   width: 30%;
 }
+
+.row {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}

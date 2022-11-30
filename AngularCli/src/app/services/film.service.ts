@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpResponse} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {Film} from "../model/film.model";
+import {PutFilm, Film} from "../model/film.model";
 import {environment} from "../../environments/environment";
 import {AuthService} from "../shared/auth.service";
 
@@ -20,7 +20,15 @@ export class FilmService {
     return this.http.get<Film>(`${environment.baseUrl}/films/` + id, {observe: "response", headers: this.auth.getTokenHeader()})
   }
 
-  public deleteFilm(id: number): void {
-    this.http.post<Film>(`${environment.baseUrl}/films/delete/` + id, {headers: this.auth.getTokenHeader()})
+  public createFilm(film: PutFilm): Observable<HttpResponse<any>> {
+    return this.http.post<any>(`${environment.baseUrl}/films/create`, film, {observe: "response", headers: this.auth.getTokenHeader()})
+  }
+
+  public updateFilm(id: number, film: PutFilm): Observable<HttpResponse<any>> {
+    return this.http.post<any>(`${environment.baseUrl}/films/update/` + id, film, {observe: "response", headers: this.auth.getTokenHeader()})
+  }
+
+  public deleteFilm(id: number): Observable<HttpResponse<any>> {
+    return this.http.post<any>(`${environment.baseUrl}/films/delete/` + id, {observe: "response", headers: this.auth.getTokenHeader()})
   }
 }

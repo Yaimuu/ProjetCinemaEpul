@@ -1,7 +1,7 @@
 <h1>Films</h1>
 
 <mat-accordion class="example-headers-align">
-  <mat-expansion-panel *ngFor="let film of films; let i = index" [expanded]="step === i" (opened)="setStep(i)" hideToggle>
+  <mat-expansion-panel *ngFor="let film of films; let i = index" [expanded]="step === i" (opened)="setStep(i)">
     <mat-expansion-panel-header>
       <mat-panel-title>
         {{film.titre}}
@@ -14,15 +14,13 @@
     <p>Durée : {{film.duree}} minutes</p>
     <p>Budget : {{film.budget}}€</p>
     <p>Montant recette : {{film.montantRecette}}€</p>
+    <p>Réalisateur : {{film.noRea.prenRea}} {{film.noRea.nomRea}}</p>
+    <p>Catégorie : {{film.codeCat.libelleCat}}</p>
 
     <mat-action-row>
       <div class="action-button action-button-start">
-        <button *ngIf="i > 0" aria-labelledby="up" mat-button color="warn" (click)="prevStep()">
-          <mat-icon aria-hidden="false" aria-label="up" fontIcon="keyboard_arrow_up"></mat-icon>
-        </button>
-        <button *ngIf="i < films.length - 1" aria-labelledby="down" mat-button color="primary" (click)="nextStep()">
-          <mat-icon aria-hidden="false" aria-label="down" fontIcon="keyboard_arrow_down"></mat-icon>
-        </button>
+        <button *ngIf="i > 0" aria-labelledby="up" mat-button color="primary" (click)="prevStep()"><mat-icon aria-hidden="false" aria-label="up" fontIcon="keyboard_arrow_up"></mat-icon></button>
+        <button *ngIf="i < films.length - 1" aria-labelledby="down" mat-button color="primary" (click)="nextStep()"><mat-icon aria-hidden="false" aria-label="down" fontIcon="keyboard_arrow_down"></mat-icon></button>
       </div>
       <div class="action-button action-button-end">
         <button mat-raised-button color="accent" (click)="modifier(film.id)">Modifier</button>
@@ -30,5 +28,4 @@
       </div>
     </mat-action-row>
   </mat-expansion-panel>
-
 </mat-accordion>

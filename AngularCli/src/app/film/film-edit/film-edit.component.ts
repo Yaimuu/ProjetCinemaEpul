@@ -1,9 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {FilmService} from "../../services/film.service";
-import {Film} from "../../model/film.model";
+import {PutFilm, Film} from "../../model/film.model";
 import {HttpResponse} from "@angular/common/http";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {Realisateur} from "../../model/realisateur.model";
+import {RealisateurService} from "../../services/realisateur.service";
+import {CategorieService} from "../../services/categorie.service";
+import {Categorie} from "../../model/categorie.model";
 
 @Component({
   selector: 'app-film-edit',
@@ -12,22 +16,26 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 })
 export class FilmEditComponent implements OnInit {
 
-  film?: Film;
+  film: any;
   titre?: string;
+  realisateurs?: Realisateur[] = [];
+  categories?: Categorie[] = [];
   formFilm: FormGroup = new FormGroup<any>({
-    id: new FormControl<string>("", [Validators.required]),
+    id: new FormControl<number>(-1, [Validators.required]),
     titre: new FormControl<string>("", [Validators.required]),
-    duree: new FormControl<string>("", [Validators.required]),
-    dateSortie: new FormControl<string>("", [Validators.required]),
-    budget: new FormControl<string>("", [Validators.required]),
-    montantRecette: new FormControl<string>("", [Validators.required]),
+    duree: new FormControl<number>(-1, [Validators.required]),
+    dateSortie: new FormControl<Date>(new Date(), [Validators.required]),
+    budget: new FormControl<number>(0, [Validators.required]),
+    montantRecette: new FormControl<number>(0, [Validators.required]),
+    realisateur: new FormControl<number>(-1, [Validators.required]),
+    categorie: new FormControl<string>("", [Validators.required]),
   });
 
-  ngOnInit(): void {
-
-  }
-
-  constructor(private filmService: FilmService, private route: ActivatedRoute, private router: Router) {
+  constructor(private filmService: FilmService,
+              private realisateurService: RealisateurService,
+              private categorieService: CategorieService,
+              private route: ActivatedRoute,
+              private router: Router) {
     if (this.route.snapshot.params['id']) {
       this.filmService.getFilm(this.route.snapshot.params['id']).subscribe({
         next: (response: HttpResponse<Film>) => {
@@ -35,13 +43,15 @@ export class FilmEditComponent implements OnInit {
             throw new Error('Erreur lors du chargement du film');
           }
           this.titre = 'Modifier un film';
-          this.film = response.body
+          this.film = response.body;
           this.formFilm.controls['id'].setValue(response.body.id);
           this.formFilm.controls['titre'].setValue(response.body.titre);
           this.formFilm.controls['duree'].setValue(response.body.duree);
           this.formFilm.controls['dateSortie'].setValue(response.body.dateSortie);
           this.formFilm.controls['budget'].setValue(response.body.budget);
           this.formFilm.controls['montantRecette'].setValue(response.body.montantRecette);
+          this.formFilm.controls['realisateur'].setValue(response.body.noRea.id);
+          this.formFilm.controls['categorie'].setValue(response.body.codeCat.id);
         },
         error: (error: any) => {
           this.router.navigate(['/films']);
@@ -52,8 +62,51 @@ export class FilmEditComponent implements OnInit {
     }
   }
 
+  ngOnInit(): void {
+    this.realisateurService.getRealisateurs().subscribe({
+      next: (response) => {
+        if (!response.ok || !response.body) {
+          throw new Error('Erreur lors du chargement des réalisateurs');
+        }
+        this.realisateurs = response.body;
+      }
+    });
+
+    this.categorieService.getCategories().subscribe({
+      next: (response) => {
+        if (!response.ok || !response.body) {
+          throw new Error('Erreur lors du chargement des réalisateurs');
+        }
+        this.categories = response.body;
+      }
+    });
+  }
+
   submit() {
-    // TODO add route to submit
+    const film: PutFilm = new PutFilm(
+      this.formFilm.controls['titre'].value,
+      this.formFilm.controls['duree'].value,
+      this.formFilm.controls['dateSortie'].value,
+      this.formFilm.controls['budget'].value,
+      this.formFilm.controls['montantRecette'].value,
+      this.formFilm.controls['realisateur'].value,
+      this.formFilm.controls['categorie'].value
+    );
+    console.log(film);
+    if (this.formFilm.controls['id'].value === -1) {
+
+    } else {
+      this.filmService.updateFilm(this.formFilm.controls['id'].value, film).subscribe({
+        next: (response) => {
+          if (response.ok) {
+            this.router.navigate(['/films'])
+          } else {
+            alert('KO');
+          }
+        }
+      });
+      return;
+    }
   }
 
 }

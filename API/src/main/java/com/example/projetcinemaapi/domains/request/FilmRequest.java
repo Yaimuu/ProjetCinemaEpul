@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -12,7 +12,7 @@ import java.time.LocalDate;
 public class FilmRequest {
     private String titre;
     private Integer duree;
-    private LocalDate dateSortie;
+    private LocalDateTime dateSortie;
     private Integer budget;
     private Integer montantRecette;
     private Integer noRea;
