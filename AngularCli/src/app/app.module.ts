@@ -21,6 +21,10 @@ import {ActeurComponent} from './acteur/acteur.component';
 import {MatTableModule} from "@angular/material/table";
 import {MatSortModule} from "@angular/material/sort";
 import {MAT_DATE_LOCALE, MatNativeDateModule} from '@angular/material/core';
+import {registerLocaleData} from "@angular/common";
+
+import localeFr from '@angular/common/locales/fr';
+registerLocaleData(localeFr);
 
 @NgModule({
   declarations: [
@@ -28,8 +32,7 @@ import {MAT_DATE_LOCALE, MatNativeDateModule} from '@angular/material/core';
     NavbarComponent,
     FooterComponent,
     HomeComponent,
-    LoginComponent,
-    ActeurComponent
+    LoginComponent
   ],
   imports: [
     BrowserModule,

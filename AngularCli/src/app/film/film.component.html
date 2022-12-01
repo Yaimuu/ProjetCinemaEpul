@@ -12,7 +12,7 @@
         {{film.titre}}
       </mat-panel-title>
       <mat-panel-description>
-        Date de sortie : {{film.dateSortie | date:'d MMMM y'}}
+        Date de sortie : {{film.dateSortie | date:'d MMMM y' : '+0100' : 'fr-FR'}}
       </mat-panel-description>
     </mat-expansion-panel-header>
 
