@@ -35,11 +35,11 @@ class AuthService {
 
   Future<User> getAuthenticatedUser() async {
     final token = await getToken();
-    developer.log(token!);
-    Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
-    developer.log(decodedToken.toString());
+    // developer.log(token!);
+    Map<String, dynamic> decodedToken = JwtDecoder.decode(token!);
+    // developer.log(decodedToken.toString());
     User user = User.fromJson(decodedToken);
-    developer.log(user.role);
+    // developer.log(user.role);
 
     return Future.value(user);
   }
@@ -51,6 +51,7 @@ class AuthService {
   Future<LoginResponse> loginUser(LoginRequest loginRequest) async {
     developer.log(loginRequest.toJson().toString());
     developer.log('${Constants.urlAPI}auth/login');
+
     final response = await http.post(
       Uri.parse('${Constants.urlAPI}auth/login'),
       headers: <String, String>{

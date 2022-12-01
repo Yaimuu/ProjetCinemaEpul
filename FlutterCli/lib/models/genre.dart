@@ -1,5 +1,5 @@
 class Genre {
-  final int id;
+  final String id;
   final String label;
   final String image;
 
@@ -12,14 +12,14 @@ class Genre {
   factory Genre.fromJson(Map<String, dynamic> json) {
     return Genre(
       id: json['id'],
-      label: json['label'],
+      label: json['libelleCat'],
       image: json['image'],
     );
   }
 
   Map toJson() => {
     'id': id,
-    'label': label,
+    'libelleCat': label,
     'image': image,
   };
 

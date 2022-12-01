@@ -10,8 +10,6 @@ class ProfilePage extends StatefulWidget {
 
   const ProfilePage({super.key, required this.title});
 
-
-
   @override
   State<ProfilePage> createState() => _ProfilePageState();
 
@@ -37,12 +35,13 @@ class _ProfilePageState extends State<ProfilePage> {
                 children: [
                   Center(
                     child: Text(
-                      "Bienvenue ${snapshot.data!.login}",
-                      style: TextStyle(
-
+                            "Bienvenue ${snapshot.data!.login}",
+                            style: const TextStyle(
+                              fontSize: 30,
+                            ),
                       ),
                     ),
-                  ),
+
                 ],
               );
           }

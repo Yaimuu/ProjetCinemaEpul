@@ -1,3 +1,3 @@
 class Constants {
-  static const String urlAPI = 'http://10.42.179.205:8080/';
+  static const String urlAPI = 'http://192.168.137.1:8080/';
 }

@@ -12,15 +12,15 @@ class Director {
   factory Director.fromJson(Map<String, dynamic> json) {
     return Director(
       id: json['id'],
-      firstName: json['firstName'],
-      lastName: json['lastName'],
+      firstName: json['prenRea'],
+      lastName: json['nomRea'],
     );
   }
 
   Map toJson() => {
     'id': id,
-    'firstName': firstName,
-    'lastName': lastName,
+    'prenRea': firstName,
+    'nomRea': lastName,
   };
 
   @override

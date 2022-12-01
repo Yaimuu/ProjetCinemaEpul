@@ -2,13 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cli/service/auth_service.dart';
 import 'package:flutter_cli/view/login_page.dart';
 import 'package:flutter_cli/view/profile_page.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../movies_page.dart';
 
 class NavDrawer extends StatelessWidget {
-  final _storage = const FlutterSecureStorage();
-
   final String title;
 
   const NavDrawer({super.key, this.title=''});
