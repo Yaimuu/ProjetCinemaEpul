@@ -34,17 +34,17 @@ public class FilmController {
     public ResponseEntity createFilm(@RequestBody FilmRequest film) {
         logger.info(this.getClass().getSimpleName() + " createFilm" + film.toString());
         filmService.createFilm(film);
-        return ResponseEntity.ok("Film créé");
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/update/{id}")
     public ResponseEntity updateFilm(@PathVariable int id, @RequestBody FilmRequest film) {
         logger.info(this.getClass().getSimpleName() + " updateFilm" + film.toString());
         filmService.updateFilm(id, film);
-        return ResponseEntity.ok("Film mis à jour");
+        return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public void deleteFilm(@PathVariable int id) {
         logger.info(this.getClass().getSimpleName() + " deleteFilm(" + id + ")");
         filmService.removeFilm(id);
