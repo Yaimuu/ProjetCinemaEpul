@@ -29,6 +29,6 @@ export class FilmService {
   }
 
   public deleteFilm(id: number): Observable<HttpResponse<any>> {
-    return this.http.post<any>(`${environment.baseUrl}/films/delete/` + id, {observe: "response", headers: this.auth.getTokenHeader()})
+    return this.http.delete<any>(`${environment.baseUrl}/films/` + id, {observe: "response", headers: this.auth.getTokenHeader()})
   }
 }

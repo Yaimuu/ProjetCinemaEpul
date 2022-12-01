@@ -29,13 +29,24 @@ export class FilmComponent implements OnInit {
     })
   }
 
+  ajouter() {
+    this.router.navigate(['/films/create']);
+  }
+
   modifier(id: number) {
     this.router.navigate(['/films/edit/' + id]);
   }
 
   supprimer(id: number) {
-    this.filmService.deleteFilm(id);
-    this.router.navigate(['/films']);
+    this.filmService.deleteFilm(id).subscribe({
+      next: (response) => {
+        if (response.ok) {
+          window.location.reload();
+        } else {
+          alert('KO');
+        }
+      }
+    });
   }
 
   setStep(index: number) {

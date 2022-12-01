@@ -23,10 +23,10 @@ export class FilmEditComponent implements OnInit {
   formFilm: FormGroup = new FormGroup<any>({
     id: new FormControl<number>(-1, [Validators.required]),
     titre: new FormControl<string>("", [Validators.required]),
-    duree: new FormControl<number>(-1, [Validators.required]),
+    duree: new FormControl<number>(120, [Validators.required]),
     dateSortie: new FormControl<Date>(new Date(), [Validators.required]),
-    budget: new FormControl<number>(0, [Validators.required]),
-    montantRecette: new FormControl<number>(0, [Validators.required]),
+    budget: new FormControl<number>(1000000, [Validators.required]),
+    montantRecette: new FormControl<number>(10000000, [Validators.required]),
     realisateur: new FormControl<number>(-1, [Validators.required]),
     categorie: new FormControl<string>("", [Validators.required]),
   });
@@ -57,8 +57,6 @@ export class FilmEditComponent implements OnInit {
           this.router.navigate(['/films']);
         }
       });
-    } else {
-      this.router.navigate(['/films']);
     }
   }
 
@@ -92,14 +90,19 @@ export class FilmEditComponent implements OnInit {
       this.formFilm.controls['realisateur'].value,
       this.formFilm.controls['categorie'].value
     );
-    console.log(film);
     if (this.formFilm.controls['id'].value === -1) {
-
+      this.filmService.createFilm(film).subscribe({
+        next: (response) => {
+          if (response.ok) {
+            this.router.navigate(['/films']);
+          }
+        }
+      });
     } else {
       this.filmService.updateFilm(this.formFilm.controls['id'].value, film).subscribe({
         next: (response) => {
           if (response.ok) {
-            this.router.navigate(['/films'])
+            this.router.navigate(['/films']);
           } else {
             alert('KO');
           }

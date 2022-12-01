@@ -44,7 +44,7 @@ public class FilmController {
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public void deleteFilm(@PathVariable int id) {
         logger.info(this.getClass().getSimpleName() + " deleteFilm(" + id + ")");
         filmService.removeFilm(id);

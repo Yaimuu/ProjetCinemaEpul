@@ -1,4 +1,9 @@
-<h1>Films</h1>
+<div class="row">
+  <h1>Films</h1>
+  <button mat-raised-button color="primary" (click)="ajouter()">+ Ajouter</button>
+</div>
+
+
 
 <mat-accordion class="example-headers-align">
   <mat-expansion-panel *ngFor="let film of films; let i = index" [expanded]="step === i" (opened)="setStep(i)">
