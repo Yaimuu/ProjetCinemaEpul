@@ -38,14 +38,14 @@ public class PersonnageController {
     public ResponseEntity createPersonnage(@RequestBody PersonnageRequest request) {
         logger.info(this.getClass().getSimpleName() + " createPersonnage " + request);
         personnageService.create(request);
-        return ResponseEntity.ok("Personnage créé");
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/update")
     public ResponseEntity updatePersonnage(@RequestBody PersonnageRequest request) {
         logger.info(this.getClass().getSimpleName() + " updatePersonnage " + request);
         personnageService.update(request);
-        return ResponseEntity.ok("Personnage mis à jour");
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping

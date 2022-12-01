@@ -43,4 +43,8 @@ public class ActeurService {
 
         acteurRepository.save(ae);
     }
+
+    public void removeActeur(int id) {
+        acteurRepository.deleteById(id);
+    }
 }

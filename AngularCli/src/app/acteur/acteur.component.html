@@ -1,1 +1,28 @@
-<p>acteur works!</p>
+<div class="row">
+  <h1>Acteurs</h1>
+  <button mat-raised-button color="primary" (click)="ajouter()">+ Ajouter</button>
+</div>
+
+<mat-accordion class="example-headers-align">
+  <mat-expansion-panel *ngFor="let acteur of acteurs; let i = index" [expanded]="step === i" (opened)="setStep(i)">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{acteur.prenAct}} {{acteur.nomAct}}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <p>Date de naissance : {{acteur.dateNaiss | date:'d MMMM y'}}</p>
+    <p *ngIf="acteur.dateDeces">Date de décès : {{acteur.dateDeces | date:'d MMMM y'}}</p>
+
+    <mat-action-row>
+      <div class="action-button action-button-start">
+        <button *ngIf="i > 0" aria-labelledby="up" mat-button color="primary" (click)="prevStep()"><mat-icon aria-hidden="false" aria-label="up" fontIcon="keyboard_arrow_up"></mat-icon></button>
+        <button *ngIf="i < acteurs.length - 1" aria-labelledby="down" mat-button color="primary" (click)="nextStep()"><mat-icon aria-hidden="false" aria-label="down" fontIcon="keyboard_arrow_down"></mat-icon></button>
+      </div>
+      <div class="action-button action-button-end">
+        <button mat-raised-button color="accent" (click)="modifier(acteur.id)">Modifier</button>
+        <button mat-raised-button color="warn" (click)="supprimer(acteur.id)">Supprimer</button>
+      </div>
+    </mat-action-row>
+  </mat-expansion-panel>
+</mat-accordion>

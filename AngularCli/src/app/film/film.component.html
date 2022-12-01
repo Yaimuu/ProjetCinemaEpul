@@ -1,34 +1,36 @@
-<table [dataSource]="dataSource" mat-table matSort>
-  <ng-container matColumnDef="id">
-    <th *matHeaderCellDef mat-header-cell mat-sort-header=""> ID</th>
-    <td *matCellDef="let row" mat-cell> {{row.id}} </td>
-  </ng-container>
+<div class="row">
+  <h1>Films</h1>
+  <button mat-raised-button color="primary" (click)="ajouter()">+ Ajouter</button>
+</div>
 
-  <ng-container matColumnDef="titre">
-    <th *matHeaderCellDef mat-header-cell mat-sort-header> Titre</th>
-    <td *matCellDef="let row" mat-cell> {{row.titre}} </td>
-  </ng-container>
 
-  <ng-container matColumnDef="duree">
-    <th *matHeaderCellDef mat-header-cell mat-sort-header> Duree</th>
-    <td *matCellDef="let row" mat-cell> {{row.duree}} </td>
-  </ng-container>
 
-  <ng-container matColumnDef="dateSortie">
-    <th *matHeaderCellDef mat-header-cell mat-sort-header> Date de sortie</th>
-    <td *matCellDef="let row" mat-cell> {{row.dateSortie}} </td>
-  </ng-container>
+<mat-accordion class="example-headers-align">
+  <mat-expansion-panel *ngFor="let film of films; let i = index" [expanded]="step === i" (opened)="setStep(i)">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{film.titre}}
+      </mat-panel-title>
+      <mat-panel-description>
+        Date de sortie : {{film.dateSortie | date:'d MMMM y' : '+0100' : 'fr-FR'}}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
 
-  <ng-container matColumnDef="budget">
-    <th *matHeaderCellDef mat-header-cell mat-sort-header> Budget</th>
-    <td *matCellDef="let row" mat-cell> {{row.budget}} </td>
-  </ng-container>
+    <p>Durée : {{film.duree}} minutes</p>
+    <p>Budget : {{film.budget}}€</p>
+    <p>Montant recette : {{film.montantRecette}}€</p>
+    <p>Réalisateur : {{film.noRea.prenRea}} {{film.noRea.nomRea}}</p>
+    <p>Catégorie : {{film.codeCat.libelleCat}}</p>
 
-  <ng-container matColumnDef="montantRecette">
-    <th *matHeaderCellDef mat-header-cell mat-sort-header> Montant recette</th>
-    <td *matCellDef="let row" mat-cell> {{row.montantRecette}} </td>
-  </ng-container>
-
-  <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
-  <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
-</table>
+    <mat-action-row>
+      <div class="action-button action-button-start">
+        <button *ngIf="i > 0" aria-labelledby="up" mat-button color="primary" (click)="prevStep()"><mat-icon aria-hidden="false" aria-label="up" fontIcon="keyboard_arrow_up"></mat-icon></button>
+        <button *ngIf="i < films.length - 1" aria-labelledby="down" mat-button color="primary" (click)="nextStep()"><mat-icon aria-hidden="false" aria-label="down" fontIcon="keyboard_arrow_down"></mat-icon></button>
+      </div>
+      <div class="action-button action-button-end">
+        <button mat-raised-button color="accent" (click)="modifier(film.id)">Modifier</button>
+        <button mat-raised-button color="warn" (click)="supprimer(film.id)">Supprimer</button>
+      </div>
+    </mat-action-row>
+  </mat-expansion-panel>
+</mat-accordion>
