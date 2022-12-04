@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_cli/service/auth_service.dart';
 import 'package:flutter_cli/view/widgets/menu.dart';
+import 'package:flutter_cli/view/widgets/movie_form.dart';
 import 'dart:developer' as developer;
 
 import '../models/user.dart';
@@ -25,29 +26,37 @@ class _ProfilePageState extends State<ProfilePage> {
         title: Text(widget.title),
       ),
       drawer: NavDrawer(title:widget.title),
-      body: FutureBuilder(
-        future: AuthService().getAuthenticatedUser(),
-        builder: (context, AsyncSnapshot<User> snapshot) {
-          if(snapshot.hasData)
-          {
-            developer.log(snapshot.data.toString());
-            return ListView(
+      body: RefreshIndicator(
+        onRefresh: () async {
+          setState(() {
+
+          });
+        },
+        child: FutureBuilder(
+          future: AuthService().getAuthenticatedUser(),
+          builder: (context, AsyncSnapshot<User> snapshot) {
+            if(snapshot.hasData)
+            {
+              developer.log(snapshot.data.toString());
+              return ListView(
                 children: [
                   Center(
                     child: Text(
-                            "Bienvenue ${snapshot.data!.login}",
-                            style: const TextStyle(
-                              fontSize: 30,
-                            ),
+                      "Bienvenue ${snapshot.data!.login}",
+                      style: const TextStyle(
+                        fontSize: 30,
                       ),
                     ),
-
+                  ),
+                  // MovieForm(null),
                 ],
               );
-          }
-          return const Text("Not authenticated");
-        },
+            }
+            return const Text("Not authenticated");
+          },
+        ),
       ),
+
     );
   }
 

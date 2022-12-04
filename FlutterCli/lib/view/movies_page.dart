@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cli/service/movie_service.dart';
 import 'package:flutter_cli/view/widgets/menu.dart';
 import 'package:flutter_cli/view/widgets/movie_card.dart';
+import 'package:flutter_cli/view/widgets/movie_form.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 import '../models/movie.dart';
 
@@ -16,7 +18,6 @@ class MoviesPage extends StatefulWidget {
 
   @override
   State<MoviesPage> createState() => _MoviesPageState();
-
 }
 
 class _MoviesPageState extends State<MoviesPage> {
@@ -25,9 +26,32 @@ class _MoviesPageState extends State<MoviesPage> {
 
   late List<MovieCard> movieCards = [];
 
-  void _showAddMovieForm() {
+  void _showAddMovieForm(Movie? movie) {
     setState(() {
-
+      Widget movieForm = MovieForm(movie);
+      String alertTitle = "Add Movie";
+      if(movie != null)
+      {
+        alertTitle = "Update ${movie.title}";
+      }
+      Alert(
+        context: context,
+        title: alertTitle,
+        content: Column(
+          children: <Widget>[
+            movieForm,
+          ],
+        ),
+        // buttons: [
+        //   DialogButton(
+        //     onPressed: () => Navigator.pop(context),
+        //     child: Text(
+        //       "LOGIN",
+        //       style: TextStyle(color: Colors.white, fontSize: 20),
+        //     ),
+        //   )
+        // ]
+      ).show();
 
     });
   }
@@ -40,21 +64,25 @@ class _MoviesPageState extends State<MoviesPage> {
         title: Text(widget.title),
       ),
       drawer: NavDrawer(title:widget.title),
-      body: FutureBuilder<List<Movie>>(
-        future: MovieService().getMovies(),
-        builder: (BuildContext context, AsyncSnapshot<List<Movie>> snapshot) {
-          developer.log("Has data : ${snapshot.hasData.toString()} - Connection state : ${snapshot.connectionState}");
+      body: RefreshIndicator(
+          onRefresh: () async {
+            setState(() { });
+          },
+          child: FutureBuilder<List<Movie>>(
+            future: MovieService().getMovies(),
+            builder: (BuildContext context, AsyncSnapshot<List<Movie>> snapshot) {
+              developer.log("Has data : ${snapshot.hasData.toString()} - Connection state : ${snapshot.connectionState}");
 
-          if(snapshot.hasData && snapshot.connectionState == ConnectionState.done)
-            {
-              // developer.log(snapshot.data.toString());
-              if(movies.isEmpty || snapshot.data?.length != movies.length)
+              if(snapshot.hasData && snapshot.connectionState == ConnectionState.done)
+              {
+                // developer.log(snapshot.data.toString());
+                if(movies.isEmpty || snapshot.data?.length != movies.length)
                 {
                   snapshot.data?.forEach((element) {
                     movies.add(element);
                   });
                 }
-              if(movieCards.length != movies.length)
+                if(movieCards.length != movies.length)
                 {
                   movieCards.clear();
                   for (var element in movies) {
@@ -62,22 +90,25 @@ class _MoviesPageState extends State<MoviesPage> {
                   }
                 }
 
-              return ListView(
-                children: movieCards,
-              );
-            }
-            else {
-              return const Center(child: CircularProgressIndicator(),);
-          }
+                return ListView(
+                  children: movieCards,
+                );
+              }
+              else {
+                return const Center(child: CircularProgressIndicator(),);
+              }
 
-        },
+            },
 
+          ),
       ),
+
       floatingActionButton: FloatingActionButton(
-        onPressed: _showAddMovieForm,
+        onPressed: () => _showAddMovieForm(null),
         tooltip: 'Add movie',
         child: const Icon(Icons.add),
       ),
+
     );
   }
 

@@ -7,6 +7,7 @@ import 'dart:developer' as developer;
 import 'package:flutter_cli/models/movie.dart';
 
 import '../constants.dart';
+import 'auth_service.dart';
 
 class MovieService {
   final _storage = const FlutterSecureStorage();
@@ -32,7 +33,7 @@ class MovieService {
     // developer.log(token!);
 
     final response = await http.get(
-      Uri.parse('${Constants.urlAPI}films'),
+      Uri.parse('${Constants.BASE_URL}films'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         'Authorization': 'Bearer $token',
@@ -43,13 +44,18 @@ class MovieService {
     // developer.log((response.statusCode == 200).toString());
 
     if (response.statusCode == 200) {
-      developer.log("Response processing...");
+      developer.log("Get all movies response processing...");
       Iterable jsonResponse = jsonDecode(response.body);
 
       List<Movie> movies = List<Movie>.from( jsonResponse.map((model)=> Movie.fromJson(model)) );
 
       return Future.value(movies);
-    } else {
+    } else if(response.statusCode == 401) {
+      AuthService().refreshToken();
+      throw Exception('Failed to connect. Refresh connection...');
+    }
+    else
+    {
       throw Exception('Failed to connect.');
     }
   }
@@ -61,7 +67,7 @@ class MovieService {
     // developer.log(token!);
 
     final response = await http.get(
-      Uri.parse('${Constants.urlAPI}films/$id'),
+      Uri.parse('${Constants.BASE_URL}films/$id'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=utf-8',
         'Authorization': 'Bearer $token',
@@ -72,7 +78,7 @@ class MovieService {
     // developer.log((response.statusCode == 200).toString());
 
     if (response.statusCode == 200) {
-      developer.log("Response processing...");
+      developer.log("Get movie $id response processing...");
       Movie movieResponse = Movie.fromJson(jsonDecode(response.body));
 
       return Future.value(movieResponse);
@@ -81,14 +87,14 @@ class MovieService {
     }
   }
 
-  Future<Movie> addMovie(Movie movie) async {
+  Future<int> addMovie(Movie movie) async {
     developer.log("Add movie ...");
 
     String? token = await _storage.read(key: 'refreshToken');
     // developer.log(token!);
 
     final response = await http.post(
-      Uri.parse('${Constants.urlAPI}films/'),
+      Uri.parse('${Constants.BASE_URL}films/create'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=utf-8',
         'Authorization': 'Bearer $token',
@@ -99,30 +105,44 @@ class MovieService {
     // developer.log(response.statusCode.toString());
     // developer.log((response.statusCode == 200).toString());
 
-    if (response.statusCode == 200) {
-      developer.log("Response processing...");
-      Movie movieResponse = Movie.fromJson(jsonDecode(response.body));
-
-      return Future.value(movieResponse);
-    } else {
-      throw Exception('Failed to connect.');
-    }
+    return Future.value(response.statusCode);
   }
 
-  void deleteMovie(int id) async {
-    developer.log("Get movie $id...");
+  Future<int> updateMovie(Movie movie) async {
+    developer.log("Update movie ...");
+
+    String? token = await _storage.read(key: 'refreshToken');
+    // developer.log(token!);
+
+    final response = await http.post(
+      Uri.parse('${Constants.BASE_URL}films/update/${movie.id}'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=utf-8',
+        'Authorization': 'Bearer $token',
+      },
+      body: movie.toJson(),
+    );
+
+    // developer.log(response.statusCode.toString());
+    // developer.log((response.statusCode == 200).toString());
+
+    return Future.value(response.statusCode);
+  }
+
+  Future<int> deleteMovie(int id) async {
+    developer.log("Delete movie $id...");
 
     String? token = await _storage.read(key: 'refreshToken');
     // developer.log(token!);
 
     final response = await http.delete(
-      Uri.parse('${Constants.urlAPI}films/$id'),
+      Uri.parse('${Constants.BASE_URL}films/$id'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         'Authorization': 'Bearer $token',
       },
     );
 
-
+    return Future.value(response.statusCode);
   }
 }

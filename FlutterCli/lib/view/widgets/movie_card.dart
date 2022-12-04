@@ -5,10 +5,12 @@ import 'package:flutter_cli/service/auth_service.dart';
 import 'package:flutter_cli/service/movie_service.dart';
 import 'package:flutter_cli/view/widgets/cinema_title.dart';
 import 'package:intl/intl.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 import 'dart:developer' as developer;
 
 import '../../models/movie.dart';
+import 'movie_form.dart';
 
 class MovieCard extends StatelessWidget {
   final Movie movie;
@@ -33,7 +35,30 @@ class MovieCard extends StatelessWidget {
           ),
 
           onPressed: () async {
-            //Navigator.of(context).pushNamed(HomePage.tag);
+            Widget movieForm = MovieForm(movie);
+            String alertTitle = "Add Movie";
+            if(movie != null)
+            {
+              alertTitle = "Update ${movie.title}";
+            }
+            Alert(
+              context: context,
+              title: alertTitle,
+              content: Column(
+                children: <Widget>[
+                  movieForm,
+                ],
+              ),
+              // buttons: [
+              //   DialogButton(
+              //     onPressed: () => Navigator.pop(context),
+              //     child: Text(
+              //       "LOGIN",
+              //       style: TextStyle(color: Colors.white, fontSize: 20),
+              //     ),
+              //   )
+              // ]
+            ).show();
           },
           child: const Icon(Icons.edit),
         ),
@@ -51,6 +76,7 @@ class MovieCard extends StatelessWidget {
 
           onPressed: () async {
             //Navigator.of(context).pushNamed(HomePage.tag);
+            MovieService().deleteMovie(movie.id);
           },
           child: const Icon(Icons.delete),
         ),
@@ -83,10 +109,10 @@ class MovieCard extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget> [
-                Image.network(
-                  movie.genre.image,
-                  fit: BoxFit.fill,
-                ),
+                // Image.network(
+                //   movie.genre.image,
+                //   fit: BoxFit.fill,
+                // ),
                 ListTile(
                   leading: const Icon(Icons.movie),
                   title: ExpandablePanel(

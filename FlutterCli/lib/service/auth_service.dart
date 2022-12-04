@@ -25,6 +25,13 @@ class AuthService {
   Future<bool> isAuthenticated() async {
     return _storage.containsKey(key: "jwtToken");
   }
+
+  Future<String?> getRefreshToken() async {
+    String? token = "";
+    token = await _storage.read(key: "refreshToken");
+
+    return token;
+  }
   
   Future<String?> getToken() async {
     String? token = "";
@@ -37,11 +44,27 @@ class AuthService {
     final token = await getToken();
     // developer.log(token!);
     Map<String, dynamic> decodedToken = JwtDecoder.decode(token!);
-    // developer.log(decodedToken.toString());
+    developer.log(decodedToken.toString());
+
+    developer.log(DateTime.fromMicrosecondsSinceEpoch(decodedToken["exp"]).toString());
     User user = User.fromJson(decodedToken);
     // developer.log(user.role);
 
     return Future.value(user);
+  }
+
+  void refreshToken() async {
+    var refresh_token = await getRefreshToken();
+
+    final response = await http.post(Uri.https(Constants.BASE_URL, '/auth/refreshtoken'),
+        headers: {'grant_type': 'refresh_token', 'refresh_token': '$refresh_token'});
+
+    // developer.log(response.body);
+
+    var token = jsonDecode(response.body)['jwtToken'];
+    // refresh_token = jsonDecode(response.body)['refreshToken'];
+
+    await _storage.write(key: 'jwtToken', value: token);
   }
 
   void logout() {
@@ -50,10 +73,10 @@ class AuthService {
 
   Future<LoginResponse> loginUser(LoginRequest loginRequest) async {
     developer.log(loginRequest.toJson().toString());
-    developer.log('${Constants.urlAPI}auth/login');
+    developer.log('${Constants.BASE_URL}auth/login');
 
     final response = await http.post(
-      Uri.parse('${Constants.urlAPI}auth/login'),
+      Uri.parse('${Constants.BASE_URL}auth/login'),
       headers: <String, String>{
         'Content-Type': 'application/json',
       },
@@ -66,9 +89,8 @@ class AuthService {
     if (response.statusCode == 200) {
       LoginResponse jsonResponse = LoginResponse.fromJson(jsonDecode(response.body));
 
-      const storage = FlutterSecureStorage();
-      await storage.write(key: 'jwtToken', value: jsonResponse.jwtToken);
-      await storage.write(key: 'refreshToken', value: jsonResponse.refreshToken);
+      await _storage.write(key: 'jwtToken', value: jsonResponse.jwtToken);
+      await _storage.write(key: 'refreshToken', value: jsonResponse.refreshToken);
 
       // If the server did return a 201 CREATED response,
       // then parse the JSON.
