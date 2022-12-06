@@ -38,6 +38,10 @@ public class PersonnageService {
         return personnageRepository.findById_NoAct(id);
     }
 
+    public Personnage getPersonnagesByFilmAndActeur(int film_id, int acteur_id) {
+        return personnageRepository.findById_NoFilmAndId_NoAct(film_id, acteur_id);
+    }
+
     public void create(PersonnageRequest request) {
         Personnage personnage = Personnage.builder()
                 .id(new PersonnageId(request.getNoFilm(), request.getNoAct()))

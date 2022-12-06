@@ -45,6 +45,12 @@ public class PersonnageController {
         return ResponseEntity.ok(personnageService.getPersonnagesByActeur(id));
     }
 
+    @GetMapping("/film/{film_id}/acteur/{acteur_id}")
+    public ResponseEntity getPersonnagesByFilm(@PathVariable int film_id, @PathVariable int acteur_id) {
+        logger.info(this.getClass().getSimpleName() + " getPersonnagesByFilmAndActeur(" + film_id + ',' + acteur_id + ")");
+        return ResponseEntity.ok(personnageService.getPersonnagesByFilmAndActeur(film_id, acteur_id));
+    }
+
     @PostMapping("/create")
     public ResponseEntity createPersonnage(@RequestBody PersonnageRequest request) {
         logger.info(this.getClass().getSimpleName() + " createPersonnage " + request);
