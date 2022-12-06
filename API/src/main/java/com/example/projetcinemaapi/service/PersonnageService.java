@@ -46,7 +46,10 @@ public class PersonnageService {
         personnageRepository.save(personnage);
     }
 
-    public void removeById(PersonnageId id) {
-        personnageRepository.deleteById(id);
+    public void removeById(PersonnageRequest request) {
+        personnageRepository.deleteById(PersonnageId.builder()
+                                                    .noAct(request.getNoAct())
+                                                    .noFilm(request.getNoFilm())
+                                                    .build());
     }
 }

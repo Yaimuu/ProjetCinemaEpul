@@ -1,6 +1,5 @@
 package com.example.projetcinemaapi.controller;
 
-import com.example.projetcinemaapi.domains.PersonnageId;
 import com.example.projetcinemaapi.domains.request.PersonnageRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -28,7 +27,7 @@ public class PersonnageController {
         return ResponseEntity.ok(personnageService.getAll());
     }
 
-    @GetMapping("/id")
+    @PostMapping("/id")
     public ResponseEntity getPersonnage(@RequestBody PersonnageRequest request) {
         logger.info(this.getClass().getSimpleName() + " getPersonnage " + request);
         return ResponseEntity.ok(personnageService.getPersonnage(request));
@@ -48,10 +47,10 @@ public class PersonnageController {
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping
-    public ResponseEntity removePersonnage(@RequestBody PersonnageId id) {
-        logger.info(this.getClass().getSimpleName() + " removePersonnage(" + id + ")");
-        personnageService.removeById(id);
+    @PostMapping("/delete")
+    public ResponseEntity removePersonnage(@RequestBody PersonnageRequest request) {
+        logger.info(this.getClass().getSimpleName() + " removePersonnage " + request);
+        personnageService.removeById(request);
         return ResponseEntity.noContent().build();
     }
 }
