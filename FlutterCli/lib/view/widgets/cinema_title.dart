@@ -5,8 +5,9 @@ class CinemaTitle extends StatelessWidget {
   final int level;
   final String title;
   final double initialFontSize = 40.0;
+  final Color color;
 
-  const CinemaTitle({super.key, this.level=1, required this.title});
+  const CinemaTitle({super.key, this.level=1, required this.title, this.color=const Color.fromARGB(255, 128, 128, 128)});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,7 @@ class CinemaTitle extends StatelessWidget {
       child: Text(
           title,
           style: TextStyle(
-            color: const Color.fromARGB(255, 128, 128, 128),
+            color: color,
             fontSize: initialFontSize / level,
             fontWeight: FontWeight.w500,
           )

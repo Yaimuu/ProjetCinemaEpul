@@ -68,13 +68,13 @@ class NavDrawer extends StatelessWidget {
           // User is not authenticated
           else {
             userMenu.addAll(<Widget>[
-              ListTile(
-                leading: const Icon(Icons.people_alt_rounded),
-                title: const Text('Login'),
-                onTap: () => {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => LoginPage(title: title))),
-                },
-              ),
+              // ListTile(
+              //   leading: const Icon(Icons.people_alt_rounded),
+              //   title: const Text('Login'),
+              //   onTap: () => {
+              //     Navigator.of(context).push(MaterialPageRoute(builder: (context) => LoginPage(title: title))),
+              //   },
+              // ),
             ]);
           }
         }

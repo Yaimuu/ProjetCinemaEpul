@@ -59,8 +59,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                     drawer: NavDrawer(title: widget.title),
                     body: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                      child: ListView(
                         children: genreCards,
                       ),
                     ),
