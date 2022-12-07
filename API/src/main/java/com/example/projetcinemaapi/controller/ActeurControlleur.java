@@ -35,6 +35,12 @@ public class ActeurControlleur {
         return ResponseEntity.ok(acteur);
     }
 
+    @GetMapping("/notfilm/{film_id}")
+    public ResponseEntity getActorNotIn(@PathVariable int filmId) {
+        logger.info(this.getClass().getSimpleName() + " getActorNotIn(" + filmId + ")");
+        return ResponseEntity.ok(acteurService.getActeursNotIn(filmId));
+    }
+
     @PostMapping("/create")
     public ResponseEntity createActor(@RequestBody ActeurRequest request) {
         logger.info(this.getClass().getSimpleName() + " createActor " + request.toString());

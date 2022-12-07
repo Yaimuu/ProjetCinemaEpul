@@ -26,6 +26,10 @@ public class FilmService {
         return filmRepository.findById(id).orElseThrow(FilmNotFoundException::new);
     }
 
+    public List<Film> getFilmsNotPlayedBy(int acteurId) {
+        return filmRepository.getFilmsNotPlayedBy(acteurId);
+    }
+
     public void createFilm(FilmRequest request) {
         Film film = Film.builder()
                 .titre(request.getTitre())

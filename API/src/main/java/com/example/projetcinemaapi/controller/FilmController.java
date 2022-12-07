@@ -30,6 +30,12 @@ public class FilmController {
         return ResponseEntity.ok(filmService.getFilmById(id));
     }
 
+    @GetMapping("/notacteur/{acteur_id}")
+    public ResponseEntity getFilmsNotPlayedBy(@PathVariable int acteur_id) {
+        logger.info(this.getClass().getSimpleName() + " getFilmsNotPlayedBy(" + acteur_id + ")");
+        return ResponseEntity.ok(filmService.getFilmsNotPlayedBy(acteur_id));
+    }
+
     @PostMapping("/create")
     public ResponseEntity createFilm(@RequestBody FilmRequest film) {
         logger.info(this.getClass().getSimpleName() + " createFilm" + film.toString());
