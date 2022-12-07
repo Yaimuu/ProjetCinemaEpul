@@ -8,22 +8,24 @@
     <div class="navbar-right">
       <nav>
         <ul>
-          <li>
-            <a *ngIf="this.authService.isLoggedIn" href="/films">Films</a>
+          <li *ngIf="this.authService.isLoggedIn" >
+            <a href="/films">Films</a>
+          </li>
+
+          <li *ngIf="this.authService.isLoggedIn" >
+            <a href="/acteurs">Acteurs</a>
+          </li>
+
+          <li *ngIf="this.authService.isLoggedIn" >
+            <a href="/personnages">Personnages</a>
+          </li>
+
+          <li *ngIf="!this.authService.isLoggedIn">
+            <a href="/login">Login</a>
           </li>
 
           <li>
-            <a *ngIf="this.authService.isLoggedIn" href="/acteurs">Acteurs</a>
-          </li>
-
-          <li>
-            <a *ngIf="!this.authService.isLoggedIn" href="/login">Login</a>
-          </li>
-
-          <li>
-            <button mat-button color="primary" (click)="logout()" *ngIf="this.authService.isLoggedIn"
-                    type="button" class="btn btn-danger nav-button">Se déconnecter
-            </button>
+            <button mat-button color="primary" (click)="logout()" *ngIf="this.authService.isLoggedIn" type="button" class="btn btn-danger nav-button">Se déconnecter</button>
           </li>
         </ul>
       </nav>

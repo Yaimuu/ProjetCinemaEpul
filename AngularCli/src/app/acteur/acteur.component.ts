@@ -49,6 +49,10 @@ export class ActeurComponent implements OnInit {
     });
   }
 
+  personnages(id: number) {
+    this.router.navigate(['/personnages/acteur/' + id]);
+  }
+
   setStep(index: number) {
     this.step = index;
   }

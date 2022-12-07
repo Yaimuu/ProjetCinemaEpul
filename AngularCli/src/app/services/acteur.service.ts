@@ -20,6 +20,10 @@ export class ActeurService {
     return this.http.get<Acteur>(`${environment.baseUrl}/acteurs/` + id, {observe: "response", headers: this.auth.getTokenHeader()})
   }
 
+  public getActeursNotIn(film_id: number): Observable<HttpResponse<Acteur[]>> {
+    return this.http.get<Acteur[]>(`${environment.baseUrl}/acteurs/notfilm/` + film_id, {observe: "response", headers: this.auth.getTokenHeader()})
+  }
+
   public createActeur(acteur: PutActeur): Observable<HttpResponse<any>> {
     return this.http.post<any>(`${environment.baseUrl}/acteurs/create`, acteur, {observe: "response", headers: this.auth.getTokenHeader()})
   }

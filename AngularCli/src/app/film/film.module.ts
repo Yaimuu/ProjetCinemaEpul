@@ -16,11 +16,13 @@ import {MatMenuModule} from "@angular/material/menu";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatSelectModule} from "@angular/material/select";
+import { FilmSingleComponent } from './film-single/film-single.component';
 
 @NgModule({
   declarations: [
     FilmComponent,
-    FilmEditComponent
+    FilmEditComponent,
+    FilmSingleComponent
   ],
   exports: [
 

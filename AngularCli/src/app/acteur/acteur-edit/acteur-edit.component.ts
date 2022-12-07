@@ -74,7 +74,7 @@ export class ActeurEditComponent {
       this.acteurService.updateActeur(this.formActeur.controls['id'].value, acteur).subscribe({
         next: (response) => {
           if (response.ok) {
-            this.router.navigate(['/acteurs']);
+            this.router.navigate(['/acteurs/' + this.formActeur.controls['id'].value]);
           } else {
             alert('KO');
           }

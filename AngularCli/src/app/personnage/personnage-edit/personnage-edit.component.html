@@ -1,0 +1,31 @@
+<h1>{{ titre }}</h1>
+
+<form [formGroup]="formPersonnage">
+  <div class="formPersonnage">
+
+    <mat-form-field appearance="fill">
+      <mat-label>Nom du personnage :</mat-label>
+      <input formControlName="nomPers" matInput/>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Film</mat-label>
+      <mat-select formControlName="noFilm">
+        <mat-option *ngFor="let film of films" [value]="film.id">
+          {{film.titre}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Acteur</mat-label>
+      <mat-select formControlName="noAct">
+        <mat-option *ngFor="let acteur of acteurs" [value]="acteur.id">
+          {{acteur.prenAct}} {{acteur.nomAct}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" [disabled]="!formPersonnage.valid" (click)="submit()">Sauvegarder</button>
+  </div>
+</form>

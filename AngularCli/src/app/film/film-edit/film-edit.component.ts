@@ -18,8 +18,8 @@ export class FilmEditComponent implements OnInit {
 
   film: any;
   titre?: string;
-  realisateurs?: Realisateur[] = [];
-  categories?: Categorie[] = [];
+  realisateurs: Realisateur[] = [];
+  categories: Categorie[] = [];
   formFilm: FormGroup = new FormGroup<any>({
     id: new FormControl<number>(-1, [Validators.required]),
     titre: new FormControl<string>("", [Validators.required]),
@@ -102,7 +102,7 @@ export class FilmEditComponent implements OnInit {
       this.filmService.updateFilm(this.formFilm.controls['id'].value, film).subscribe({
         next: (response) => {
           if (response.ok) {
-            this.router.navigate(['/films']);
+            this.router.navigate(['/films/' + this.formFilm.controls['id'].value]);
           } else {
             alert('KO');
           }

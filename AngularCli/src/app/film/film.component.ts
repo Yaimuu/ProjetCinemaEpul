@@ -49,6 +49,10 @@ export class FilmComponent implements OnInit {
     });
   }
 
+  personnages(id: number) {
+    this.router.navigate(['/personnages/film/' + id]);
+  }
+
   setStep(index: number) {
     this.step = index;
   }

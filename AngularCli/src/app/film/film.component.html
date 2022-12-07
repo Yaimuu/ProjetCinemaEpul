@@ -22,6 +22,8 @@
     <p>Réalisateur : {{film.noRea.prenRea}} {{film.noRea.nomRea}}</p>
     <p>Catégorie : {{film.codeCat.libelleCat}}</p>
 
+    <button mat-raised-button color="primary" (click)="personnages(film.id)">Voir les personnages</button>
+
     <mat-action-row>
       <div class="action-button action-button-start">
         <button *ngIf="i > 0" aria-labelledby="up" mat-button color="primary" (click)="prevStep()"><mat-icon aria-hidden="false" aria-label="up" fontIcon="keyboard_arrow_up"></mat-icon></button>

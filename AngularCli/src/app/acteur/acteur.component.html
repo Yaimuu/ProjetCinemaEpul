@@ -11,8 +11,10 @@
       </mat-panel-title>
     </mat-expansion-panel-header>
 
-    <p>Date de naissance : {{acteur.dateNaiss | date:'d MMMM y'}}</p>
-    <p *ngIf="acteur.dateDeces">Date de décès : {{acteur.dateDeces | date:'d MMMM y'}}</p>
+    <p>Date de naissance : {{acteur.dateNaiss | date:'d MMMM y' : '+0100' : 'fr-FR'}}</p>
+    <p *ngIf="acteur.dateDeces">Date de décès : {{acteur.dateDeces | date:'d MMMM y' : '+0100' : 'fr-FR'}}</p>
+
+    <button mat-raised-button color="primary" (click)="personnages(acteur.id)">Voir ses personnages</button>
 
     <mat-action-row>
       <div class="action-button action-button-start">

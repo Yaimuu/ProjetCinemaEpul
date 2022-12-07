@@ -1,0 +1,17 @@
+<div *ngIf="acteur">
+  <div class="row">
+    <h1>Acteur : {{acteur.prenAct}} {{acteur.nomAct}}</h1>
+  </div>
+
+  <p>Date de naissance : {{acteur.dateNaiss | date:'d MMMM y' : '+0100' : 'fr-FR'}}</p>
+  <p *ngIf="acteur.dateDeces">Date de décès : {{acteur.dateDeces | date:'d MMMM y' : '+0100' : 'fr-FR'}}</p>
+
+    <p>
+      <button mat-raised-button color="primary" (click)="personnages(acteur.id)">Voir ses personnages</button>
+    </p>
+
+  <div class="bottom-row">
+    <button mat-raised-button color="accent" (click)="modifier(acteur.id)">Modifier</button>
+    <button mat-raised-button color="warn" (click)="supprimer(acteur.id)">Supprimer</button>
+  </div>
+</div>

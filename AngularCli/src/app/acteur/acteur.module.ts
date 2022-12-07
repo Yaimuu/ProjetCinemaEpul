@@ -10,11 +10,13 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import { ActeurSingleComponent } from './acteur-single/acteur-single.component';
 
 @NgModule({
   declarations: [
     ActeurComponent,
-    ActeurEditComponent
+    ActeurEditComponent,
+    ActeurSingleComponent
   ],
   imports: [
     CommonModule,
