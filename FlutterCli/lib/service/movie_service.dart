@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter_cli/models/requests/movie_request.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'dart:developer' as developer;
@@ -26,6 +27,21 @@ class MovieService {
     return '${parts[0].padLeft(2, '0')}:${parts[1].padLeft(2, '0')}';
   }
 
+  Duration parseDuration(String s) {
+    int hours = 0;
+    int minutes = 0;
+    int micros;
+    List<String> parts = s.split(':');
+    if (parts.length > 2) {
+      hours = int.parse(parts[parts.length - 3]);
+    }
+    if (parts.length > 1) {
+      minutes = int.parse(parts[parts.length - 2]);
+    }
+    micros = (double.parse(parts[parts.length - 1]) * 1000000).round();
+    return Duration(hours: hours, minutes: minutes, microseconds: micros);
+  }
+
   Future<List<Movie>> getMovies() async {
     developer.log("Get movies...");
 
@@ -45,7 +61,7 @@ class MovieService {
 
     if (response.statusCode == 200) {
       developer.log("Get all movies response processing...");
-      Iterable jsonResponse = jsonDecode(response.body);
+      Iterable jsonResponse = jsonDecode(utf8.decode(response.bodyBytes));
 
       List<Movie> movies = List<Movie>.from( jsonResponse.map((model)=> Movie.fromJson(model)) );
 
@@ -79,7 +95,7 @@ class MovieService {
 
     if (response.statusCode == 200) {
       developer.log("Get movie $id response processing...");
-      Movie movieResponse = Movie.fromJson(jsonDecode(response.body));
+      Movie movieResponse = Movie.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
 
       return Future.value(movieResponse);
     } else {
@@ -87,7 +103,7 @@ class MovieService {
     }
   }
 
-  Future<int> addMovie(Movie movie) async {
+  Future<int> addMovie(MovieRequest movieRequest) async {
     developer.log("Add movie ...");
 
     String? token = await _storage.read(key: 'refreshToken');
@@ -99,32 +115,33 @@ class MovieService {
         'Content-Type': 'application/json; charset=utf-8',
         'Authorization': 'Bearer $token',
       },
-      body: movie.toJson(),
+      body: jsonEncode(movieRequest.toJson()),
     );
-
-    // developer.log(response.statusCode.toString());
+    developer.log(jsonEncode(movieRequest.toJson()));
+    developer.log(response.statusCode.toString());
     // developer.log((response.statusCode == 200).toString());
 
     return Future.value(response.statusCode);
   }
 
-  Future<int> updateMovie(Movie movie) async {
+  Future<int> updateMovie(MovieRequest movieRequest) async {
     developer.log("Update movie ...");
 
     String? token = await _storage.read(key: 'refreshToken');
     // developer.log(token!);
+    // MovieRequest movieRequest = MovieRequest.fromMovie(movie);
 
     final response = await http.post(
-      Uri.parse('${Constants.BASE_URL}films/update/${movie.id}'),
+      Uri.parse('${Constants.BASE_URL}films/update/${movieRequest.id}'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=utf-8',
         'Authorization': 'Bearer $token',
       },
-      body: movie.toJson(),
+      body: jsonEncode(movieRequest.toJson()),
     );
 
-    // developer.log(response.statusCode.toString());
-    // developer.log((response.statusCode == 200).toString());
+    developer.log(jsonEncode(movieRequest.toJson()));
+    developer.log(response.statusCode.toString());
 
     return Future.value(response.statusCode);
   }

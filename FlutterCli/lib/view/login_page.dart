@@ -3,7 +3,7 @@ import 'dart:developer' as developer;
 import 'package:flutter/material.dart';
 import 'package:flutter_cli/models/requests/login_request.dart';
 import 'package:flutter_cli/service/auth_service.dart';
-import 'package:flutter_cli/view/widgets/login_form.dart';
+import 'package:flutter_cli/view/widgets/forms/login_form.dart';
 import 'package:flutter_cli/view/widgets/menu.dart';
 import '../models/requests/login_response.dart';
 

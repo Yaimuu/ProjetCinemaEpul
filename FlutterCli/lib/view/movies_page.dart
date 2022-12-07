@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cli/service/movie_service.dart';
 import 'package:flutter_cli/view/widgets/menu.dart';
 import 'package:flutter_cli/view/widgets/movie_card.dart';
-import 'package:flutter_cli/view/widgets/movie_form.dart';
+import 'package:flutter_cli/view/widgets/forms/movie_form.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
 import '../models/movie.dart';
@@ -28,7 +28,7 @@ class _MoviesPageState extends State<MoviesPage> {
 
   void _showAddMovieForm(Movie? movie) {
     setState(() {
-      Widget movieForm = MovieForm(movie);
+      Widget movieForm = MovieForm(movie, () async {setState(() { });} );
       String alertTitle = "Add Movie";
       if(movie != null)
       {
@@ -42,15 +42,6 @@ class _MoviesPageState extends State<MoviesPage> {
             movieForm,
           ],
         ),
-        // buttons: [
-        //   DialogButton(
-        //     onPressed: () => Navigator.pop(context),
-        //     child: Text(
-        //       "LOGIN",
-        //       style: TextStyle(color: Colors.white, fontSize: 20),
-        //     ),
-        //   )
-        // ]
       ).show();
 
     });
@@ -76,18 +67,14 @@ class _MoviesPageState extends State<MoviesPage> {
               if(snapshot.hasData && snapshot.connectionState == ConnectionState.done)
               {
                 // developer.log(snapshot.data.toString());
-                if(movies.isEmpty || snapshot.data?.length != movies.length)
-                {
-                  snapshot.data?.forEach((element) {
-                    movies.add(element);
-                  });
-                }
-                if(movieCards.length != movies.length)
-                {
-                  movieCards.clear();
-                  for (var element in movies) {
-                    movieCards.add(MovieCard(movie: element));
-                  }
+                movies.clear();
+                snapshot.data?.forEach((element) {
+                  movies.add(element);
+                });
+
+                movieCards.clear();
+                for (var element in movies) {
+                  movieCards.add(MovieCard(movie: element, notifyParent: () async {setState(() { });} ));
                 }
 
                 return ListView(

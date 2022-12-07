@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../models/requests/login_request.dart';
-import '../../models/requests/login_response.dart';
-import '../../service/auth_service.dart';
-import 'menu.dart';
+import '../../../models/requests/login_request.dart';
+import '../../../models/requests/login_response.dart';
+import '../../../service/auth_service.dart';
+import '../menu.dart';
 
 class LoginForm extends StatelessWidget {
 

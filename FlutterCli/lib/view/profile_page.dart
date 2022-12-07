@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_cli/service/auth_service.dart';
 import 'package:flutter_cli/view/widgets/menu.dart';
-import 'package:flutter_cli/view/widgets/movie_form.dart';
+import 'package:flutter_cli/view/widgets/forms/movie_form.dart';
 import 'dart:developer' as developer;
 
 import '../models/user.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_cli/view/widgets/genre_card.dart';
-import 'package:flutter_cli/view/widgets/login_form.dart';
+import 'package:flutter_cli/view/widgets/forms/login_form.dart';
 import 'package:flutter_cli/view/widgets/menu.dart';
 
 import '../models/genre.dart';

@@ -9,6 +9,10 @@ class Director {
     required this.lastName,
   });
 
+  String getFullname() {
+    return "$firstName $lastName";
+  }
+
   factory Director.fromJson(Map<String, dynamic> json) {
     return Director(
       id: json['id'],

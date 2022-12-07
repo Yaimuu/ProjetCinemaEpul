@@ -3,8 +3,10 @@ import 'dart:ffi';
 import 'package:flutter_cli/models/director.dart';
 import 'package:flutter_cli/models/genre.dart';
 import 'package:flutter_cli/models/movie.dart';
+import 'package:intl/intl.dart';
 
 class MovieRequest {
+  int id = -1;
   final String title;
   final int duration;
   final DateTime releaseDate;
@@ -13,7 +15,7 @@ class MovieRequest {
   final String idGenre;
   final int idDirector;
 
-  const MovieRequest({
+  MovieRequest({
     required this.title,
     required this.duration,
     required this.releaseDate,
@@ -52,7 +54,7 @@ class MovieRequest {
   Map toJson() => {
     'titre': title,
     'duree': duration,
-    'dateSortie': releaseDate,
+    'dateSortie': DateFormat('yyyy-MM-dd').format(releaseDate),
     'budget': budget,
     'montantRecette': income,
     'codeCat': idGenre,

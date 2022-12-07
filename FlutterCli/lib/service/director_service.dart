@@ -39,7 +39,7 @@ class DirectorService {
 
     if (response.statusCode == 200) {
       developer.log("Get all directors response processing...");
-      Iterable jsonResponse = jsonDecode(response.body);
+      Iterable jsonResponse = jsonDecode(utf8.decode(response.bodyBytes));
 
       List<Director> movies = List<Director>.from( jsonResponse.map((model)=> Director.fromJson(model)) );
 
@@ -53,4 +53,6 @@ class DirectorService {
       throw Exception('Failed to connect.');
     }
   }
+
+
 }

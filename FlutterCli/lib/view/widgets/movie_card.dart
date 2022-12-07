@@ -10,12 +10,13 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 import 'dart:developer' as developer;
 
 import '../../models/movie.dart';
-import 'movie_form.dart';
+import 'forms/movie_form.dart';
 
 class MovieCard extends StatelessWidget {
   final Movie movie;
+  final Function? notifyParent;
 
-  const MovieCard({super.key, required this.movie});
+  const MovieCard({super.key, required this.movie, this.notifyParent});
 
   @override
   Widget build(BuildContext context) {
@@ -35,13 +36,20 @@ class MovieCard extends StatelessWidget {
           ),
 
           onPressed: () async {
-            Widget movieForm = MovieForm(movie);
             String alertTitle = "Add Movie";
             if(movie != null)
             {
               alertTitle = "Update ${movie.title}";
             }
-            Alert(
+
+            Widget movieForm = MovieForm(movie, notifyParent);
+
+            // alert.content = Column(
+            //   children: <Widget>[
+            //     movieForm,
+            //   ],
+            // );
+            Alert alert = Alert(
               context: context,
               title: alertTitle,
               content: Column(
@@ -49,16 +57,15 @@ class MovieCard extends StatelessWidget {
                   movieForm,
                 ],
               ),
-              // buttons: [
-              //   DialogButton(
-              //     onPressed: () => Navigator.pop(context),
-              //     child: Text(
-              //       "LOGIN",
-              //       style: TextStyle(color: Colors.white, fontSize: 20),
-              //     ),
-              //   )
-              // ]
-            ).show();
+            );
+
+            // Function callBack = () async {
+            //   alert.dismiss();
+            //   notifyParent!.call();
+            // };
+
+            alert.show();
+
           },
           child: const Icon(Icons.edit),
         ),
@@ -77,6 +84,7 @@ class MovieCard extends StatelessWidget {
           onPressed: () async {
             //Navigator.of(context).pushNamed(HomePage.tag);
             MovieService().deleteMovie(movie.id);
+            notifyParent?.call();
           },
           child: const Icon(Icons.delete),
         ),
@@ -121,10 +129,12 @@ class MovieCard extends StatelessWidget {
                     ),
                     collapsed: Column(
                       mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: collapsedContent,
                     ),
                     expanded: Column(
                       mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: expandedContent,
                     ),
                   ),

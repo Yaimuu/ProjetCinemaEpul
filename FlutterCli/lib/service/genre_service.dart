@@ -40,7 +40,7 @@ class GenreService {
 
     if (response.statusCode == 200) {
       developer.log("Get all categories response processing...");
-      Iterable jsonResponse = jsonDecode(response.body);
+      Iterable jsonResponse = jsonDecode(utf8.decode(response.bodyBytes));
 
       List<Genre> movies = List<Genre>.from( jsonResponse.map((model)=> Genre.fromJson(model)) );
 
