@@ -1,23 +1,19 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cli/service/movie_service.dart';
 import 'package:flutter_cli/view/widgets/genre_card.dart';
 import 'package:flutter_cli/view/widgets/forms/login_form.dart';
 import 'package:flutter_cli/view/widgets/menu.dart';
+import 'package:flutter_cli/view/widgets/movie_card.dart';
 
 import '../models/genre.dart';
+import '../models/movie.dart';
+import '../models/user.dart';
 import '../service/auth_service.dart';
 import '../service/genre_service.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
 
   final String title;
 
@@ -27,41 +23,116 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
+  Future<List<dynamic>> getGenresAndMovies() async {
+    return Future.value([
+      await GenreService().getGenres(),
+      await MovieService().getMovies()
+    ]);
+  }
+
   @override
   Widget build(BuildContext context) {
 
-    return FutureBuilder<bool>(
-      future: AuthService().isAuthenticated(),
+    return FutureBuilder<User>(
+      future: AuthService().getAuthenticatedUser(),
       builder: (context, snapshot) {
-
+        User authenticatedUser;
         if(snapshot.hasData)
         {
-          if(snapshot.data!)
+          if(snapshot.data!.role.contains("admin"))
             {
-              return FutureBuilder<List<Genre>>(
-                future: GenreService().getGenres(),
+              authenticatedUser = snapshot.data!;
+              return FutureBuilder<List<dynamic>>(
+                future: getGenresAndMovies(),
                 builder: (context, snapshot) {
 
-
                   List<GenreCard> genreCards = [];
+                  List<MovieCard> currentMovieCards = [];
+
+                  List<Genre> genres = [];
+                  List<Movie> currentMovies = [];
 
                   if(snapshot.hasData && snapshot.connectionState == ConnectionState.done)
                   {
-                    List<Genre>? genres = snapshot.data;
-                    for (var element in genres!) {
+                    genreCards.clear();
+
+                    genres = snapshot.data![0];
+                    currentMovies = snapshot.data![1];
+
+                    for (var element in genres) {
                       genreCards.add(GenreCard(genre: element));
                     }
+
+                    currentMovieCards.clear();
+                    for (var movie in currentMovies) {
+                      if(movie.genre.id == genres[0].id) {
+                        // print(movie);
+                        currentMovieCards.add(MovieCard(movie: movie, notifyParent: () async {setState(() { });}, authenticatedUser: authenticatedUser,));
+                      }
+                    }
                   }
+
+                  Widget updateContent() {
+                    return ListView.builder(
+                      itemCount: currentMovieCards.length,
+                      itemBuilder: (BuildContext context, int index) => currentMovieCards[index],
+                    );
+                  }
+
+                  ValueNotifier contentNotifier = ValueNotifier<Widget>(updateContent());
+
+                  final contentListener = ValueListenableBuilder(
+                      valueListenable: contentNotifier,
+                      builder: (ctx, value, child) {
+                        return value;
+                      }
+                  );
+
+                  final genreCarousel = CarouselSlider(
+                    options: CarouselOptions(
+                      height: 200.0,
+                      enlargeCenterPage: false,
+                      onPageChanged: (position,reason) {
+                        // print(reason);
+                        // print(CarouselPageChangedReason.controller);
+                        print(position);
+                        // print(currentMovies);
+                        // setState(() {
+                        //
+                        // });
+                        currentMovieCards.clear();
+                        for (var movie in currentMovies) {
+                          if(movie.genre.id == genres[position].id) {
+                            // print(movie);
+                            currentMovieCards.add(
+                                MovieCard(
+                                    movie: movie,
+                                    notifyParent: () async {contentNotifier.value = updateContent();},
+                                    authenticatedUser: authenticatedUser,
+                                )
+                            );
+                          }
+                        }
+
+                        contentNotifier.value = updateContent();
+                      },
+                      enableInfiniteScroll: false,
+                    ),
+                    items: genreCards,
+                  );
 
                   return Scaffold(
                     appBar: AppBar(
                       title: Text(widget.title),
                     ),
                     drawer: NavDrawer(title: widget.title),
-                    body: Center(
-                      child: ListView(
-                        children: genreCards,
-                      ),
+                    body: Column(
+                      children: [
+                        genreCarousel,
+                        Expanded(
+                          child: contentListener,
+                        ),
+                      ],
                     ),
                   );
 

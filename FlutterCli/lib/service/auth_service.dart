@@ -41,12 +41,12 @@ class AuthService {
   }
 
   Future<User> getAuthenticatedUser() async {
+    developer.log("Get Auth User...");
     final token = await getToken();
     // developer.log(token!);
     Map<String, dynamic> decodedToken = JwtDecoder.decode(token!);
-    developer.log(decodedToken.toString());
-
-    developer.log(DateTime.fromMicrosecondsSinceEpoch(decodedToken["exp"]).toString());
+    // developer.log(decodedToken.toString());
+    // developer.log(DateTime.fromMicrosecondsSinceEpoch(decodedToken["exp"]).toString());
     User user = User.fromJson(decodedToken);
     // developer.log(user.role);
 

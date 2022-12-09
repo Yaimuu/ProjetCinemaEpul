@@ -15,8 +15,9 @@ import 'forms/movie_form.dart';
 class MovieCard extends StatelessWidget {
   final Movie movie;
   final Function? notifyParent;
+  final User authenticatedUser;
 
-  const MovieCard({super.key, required this.movie, this.notifyParent});
+  const MovieCard({super.key, required this.movie, this.notifyParent, required this.authenticatedUser});
 
   @override
   Widget build(BuildContext context) {
@@ -42,14 +43,12 @@ class MovieCard extends StatelessWidget {
               alertTitle = "Update ${movie.title}";
             }
 
-            Widget movieForm = MovieForm(movie, notifyParent);
+            Widget movieForm = MovieForm(movie, () async {
+              Navigator.pop(context);
+              notifyParent!.call();
+            } );
 
-            // alert.content = Column(
-            //   children: <Widget>[
-            //     movieForm,
-            //   ],
-            // );
-            Alert alert = Alert(
+            Alert(
               context: context,
               title: alertTitle,
               content: Column(
@@ -57,14 +56,12 @@ class MovieCard extends StatelessWidget {
                   movieForm,
                 ],
               ),
-            );
+            ).show();
 
             // Function callBack = () async {
             //   alert.dismiss();
             //   notifyParent!.call();
             // };
-
-            alert.show();
 
           },
           child: const Icon(Icons.edit),
@@ -91,69 +88,62 @@ class MovieCard extends StatelessWidget {
       ),
     ];
 
-    return FutureBuilder<User>(
-      future: AuthService().getAuthenticatedUser(),
-      builder: (context, AsyncSnapshot<User> snapshot) {
-        bool isAdmin = false;
-        if(snapshot.hasData)
-          {
-            isAdmin = snapshot.data!.role.contains("admin");
-          }
+    final List<Widget> collapsedContent = [];
 
-        final List<Widget> collapsedContent = [];
+    NumberFormat currencyFormat = NumberFormat.compactSimpleCurrency(locale: 'en_us');
 
-        final List<Widget> expandedContent = collapsedContent + [
-          Text("Released date : ${dateFormat.format(movie.releaseDate)}"),
-          Text("Duration : ${MovieService().durationToString(movie.duration)}"),
-          Text("Budget : ${movie.budget}"),
-          Text("Income : ${movie.income}"),
+    final List<Widget> expandedContent = collapsedContent + [
+      Text("Released date : ${dateFormat.format(movie.releaseDate)}"),
+      Text("Duration : ${MovieService().durationToString(movie.duration)}"),
+      Text("Budget : ${currencyFormat.format(movie.budget)}"),
+      Text("Income : ${currencyFormat.format(movie.income)}"),
 
-        ];
+    ];
 
-        return Padding(
-          padding: const EdgeInsets.all(10),
-          child: Card(
+    bool isAdmin = authenticatedUser!.role.contains("admin");
 
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget> [
-                // Image.network(
-                //   movie.genre.image,
-                //   fit: BoxFit.fill,
-                // ),
-                ListTile(
-                  leading: const Icon(Icons.movie),
-                  title: ExpandablePanel(
-                    header: CinemaTitle(
-                      title: movie.title,
-                    ),
-                    collapsed: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: collapsedContent,
-                    ),
-                    expanded: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: expandedContent,
-                    ),
+    return Padding(
+        padding: const EdgeInsets.all(10),
+        child: Card(
+
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget> [
+              // Image.network(
+              //   movie.genre.image,
+              //   fit: BoxFit.fill,
+              // ),
+              ListTile(
+                leading: const Icon(Icons.movie),
+                title: ExpandablePanel(
+                  header: CinemaTitle(
+                    title: movie.title,
                   ),
-                  // title: Text("Released date : ${movie.releaseDate}"),
-                  subtitle: Text('Directed by ${movie.director.firstName} ${movie.director.lastName}'),
-
+                  collapsed: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: collapsedContent,
+                  ),
+                  expanded: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: expandedContent,
+                  ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: isAdmin ? adminButtons : [],
-                ),
-              ],
-            ),
+                // title: Text("Released date : ${movie.releaseDate}"),
+                subtitle: Text('Directed by ${movie.director.firstName} ${movie.director.lastName}'),
+
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: isAdmin ? adminButtons : [],
+              ),
+            ],
+          ),
 
 
 
-          )
-        );
-      },
+        )
     );
 
   }
