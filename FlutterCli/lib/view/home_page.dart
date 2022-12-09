@@ -39,111 +39,110 @@ class _HomePageState extends State<HomePage> {
         User authenticatedUser;
         if(snapshot.hasData)
         {
-          if(snapshot.data!.role.contains("admin"))
-            {
-              authenticatedUser = snapshot.data!;
-              return FutureBuilder<List<dynamic>>(
-                future: getGenresAndMovies(),
-                builder: (context, snapshot) {
 
-                  List<GenreCard> genreCards = [];
-                  List<MovieCard> currentMovieCards = [];
+            authenticatedUser = snapshot.data!;
+            return FutureBuilder<List<dynamic>>(
+              future: getGenresAndMovies(),
+              builder: (context, snapshot) {
 
-                  List<Genre> genres = [];
-                  List<Movie> currentMovies = [];
+                List<GenreCard> genreCards = [];
+                List<MovieCard> currentMovieCards = [];
 
-                  if(snapshot.hasData && snapshot.connectionState == ConnectionState.done)
-                  {
-                    genreCards.clear();
+                List<Genre> genres = [];
+                List<Movie> currentMovies = [];
 
-                    genres = snapshot.data![0];
-                    currentMovies = snapshot.data![1];
+                if(snapshot.hasData && snapshot.connectionState == ConnectionState.done)
+                {
+                  genreCards.clear();
 
-                    for (var element in genres) {
-                      genreCards.add(GenreCard(genre: element));
-                    }
+                  genres = snapshot.data![0];
+                  currentMovies = snapshot.data![1];
 
-                    currentMovieCards.clear();
-                    for (var movie in currentMovies) {
-                      if(movie.genre.id == genres[0].id) {
-                        // print(movie);
-                        currentMovieCards.add(MovieCard(movie: movie, notifyParent: () async {setState(() { });}, authenticatedUser: authenticatedUser,));
-                      }
-                    }
+                  for (var element in genres) {
+                    genreCards.add(GenreCard(genre: element));
                   }
 
-                  Widget updateContent() {
-                    return ListView.builder(
-                      itemCount: currentMovieCards.length,
-                      itemBuilder: (BuildContext context, int index) => currentMovieCards[index],
-                    );
+                  currentMovieCards.clear();
+                  for (var movie in currentMovies) {
+                    if(movie.genre.id == genres[0].id) {
+                      // print(movie);
+                      currentMovieCards.add(MovieCard(movie: movie, notifyParent: () async {setState(() { });}, authenticatedUser: authenticatedUser,));
+                    }
                   }
+                }
 
-                  ValueNotifier contentNotifier = ValueNotifier<Widget>(updateContent());
-
-                  final contentListener = ValueListenableBuilder(
-                      valueListenable: contentNotifier,
-                      builder: (ctx, value, child) {
-                        return value;
-                      }
+                Widget updateContent() {
+                  return ListView.builder(
+                    itemCount: currentMovieCards.length,
+                    itemBuilder: (BuildContext context, int index) => currentMovieCards[index],
                   );
+                }
 
-                  final genreCarousel = CarouselSlider(
-                    options: CarouselOptions(
-                      height: 200.0,
-                      enlargeCenterPage: false,
-                      onPageChanged: (position,reason) {
-                        // print(reason);
-                        // print(CarouselPageChangedReason.controller);
-                        print(position);
-                        // print(currentMovies);
-                        // setState(() {
-                        //
-                        // });
-                        currentMovieCards.clear();
-                        for (var movie in currentMovies) {
-                          if(movie.genre.id == genres[position].id) {
-                            // print(movie);
-                            currentMovieCards.add(
-                                MovieCard(
-                                    movie: movie,
-                                    notifyParent: () async {
-                                      contentNotifier.value = updateContent();
-                                      setState(() {
+                ValueNotifier contentNotifier = ValueNotifier<Widget>(updateContent());
 
-                                      });
-                                    },
-                                    authenticatedUser: authenticatedUser,
-                                )
-                            );
-                          }
+                final contentListener = ValueListenableBuilder(
+                    valueListenable: contentNotifier,
+                    builder: (ctx, value, child) {
+                      return value;
+                    }
+                );
+
+                final genreCarousel = CarouselSlider(
+                  options: CarouselOptions(
+                    height: 200.0,
+                    enlargeCenterPage: false,
+                    onPageChanged: (position,reason) {
+                      // print(reason);
+                      // print(CarouselPageChangedReason.controller);
+                      print(position);
+                      // print(currentMovies);
+                      // setState(() {
+                      //
+                      // });
+                      currentMovieCards.clear();
+                      for (var movie in currentMovies) {
+                        if(movie.genre.id == genres[position].id) {
+                          // print(movie);
+                          currentMovieCards.add(
+                              MovieCard(
+                                  movie: movie,
+                                  notifyParent: () async {
+                                    contentNotifier.value = updateContent();
+                                    setState(() {
+
+                                    });
+                                  },
+                                  authenticatedUser: authenticatedUser,
+                              )
+                          );
                         }
+                      }
 
-                        contentNotifier.value = updateContent();
-                      },
-                      enableInfiniteScroll: false,
-                    ),
-                    items: genreCards,
-                  );
+                      contentNotifier.value = updateContent();
+                    },
+                    enableInfiniteScroll: false,
+                  ),
+                  items: genreCards,
+                );
 
-                  return Scaffold(
-                    appBar: AppBar(
-                      title: Text(widget.title),
-                    ),
-                    drawer: NavDrawer(title: widget.title),
-                    body: Column(
-                      children: [
-                        genreCarousel,
-                        Expanded(
-                          child: contentListener,
-                        ),
-                      ],
-                    ),
-                  );
+                return Scaffold(
+                  appBar: AppBar(
+                    title: Text(widget.title),
+                  ),
+                  drawer: NavDrawer(title: widget.title),
+                  body: Column(
+                    children: [
+                      genreCarousel,
+                      Expanded(
+                        child: contentListener,
+                      ),
+                    ],
+                  ),
+                );
 
-                },
-              );
-            }
+              },
+            );
+
         }
 
         return Scaffold(
@@ -157,10 +156,5 @@ class _HomePageState extends State<HomePage> {
         );
       },
     );
-
-
-
-
-
   }
 }
