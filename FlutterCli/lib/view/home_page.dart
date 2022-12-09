@@ -107,7 +107,12 @@ class _HomePageState extends State<HomePage> {
                             currentMovieCards.add(
                                 MovieCard(
                                     movie: movie,
-                                    notifyParent: () async {contentNotifier.value = updateContent();},
+                                    notifyParent: () async {
+                                      contentNotifier.value = updateContent();
+                                      setState(() {
+
+                                      });
+                                    },
                                     authenticatedUser: authenticatedUser,
                                 )
                             );

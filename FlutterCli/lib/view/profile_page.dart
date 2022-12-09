@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_cli/service/auth_service.dart';
+import 'package:flutter_cli/view/widgets/cinema_title.dart';
 import 'package:flutter_cli/view/widgets/menu.dart';
 import 'package:flutter_cli/view/widgets/forms/movie_form.dart';
 import 'dart:developer' as developer;
 
+import '../constants.dart';
 import '../models/user.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -20,7 +22,20 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
+
+
+    const logo = Hero(
+      tag: 'PolyMovie',
+      child: CircleAvatar(
+        backgroundColor: Colors.red,
+
+        radius: 100,
+        backgroundImage: AssetImage(
+          'lib/assets/images/logo.jpg',
+        ),
+      ),
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -38,13 +53,36 @@ class _ProfilePageState extends State<ProfilePage> {
             if(snapshot.hasData)
             {
               developer.log(snapshot.data.toString());
-              return ListView(
+              return Column(
                 children: [
+                  Container(
+                    decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topRight,
+                        end: Alignment.bottomLeft,
+                        colors: [
+                          Colors.blue,
+                          Colors.yellow,
+                          Colors.white,
+                        ],
+                      ),
+                    ),
+                    padding: const EdgeInsets.all(12),
+                    child: const Center(
+                      child: logo,
+                    ),
+                  ),
+
                   Center(
-                    child: Text(
-                      "Bienvenue ${snapshot.data!.login}",
-                      style: const TextStyle(
-                        fontSize: 30,
+                    child: CinemaTitle(
+                      title: "Profil de ${snapshot.data!.login}",
+                    ),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.all(12),
+                    child: Center(
+                      child: Text(
+                        Constants.LOREM_IPSUM,
                       ),
                     ),
                   ),
