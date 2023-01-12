@@ -73,7 +73,7 @@ export class FilmEditComponent implements OnInit {
     this.categorieService.getCategories().subscribe({
       next: (response) => {
         if (!response.ok || !response.body) {
-          throw new Error('Erreur lors du chargement des réalisateurs');
+          throw new Error('Erreur lors du chargement des catégories');
         }
         this.categories = response.body;
       }

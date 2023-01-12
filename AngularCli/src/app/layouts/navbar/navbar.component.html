@@ -1,6 +1,6 @@
-<header>
+<div class="header">
   <div class="navbar-left">
-    <a href="/"><h1 class="title">Poly Ciné</h1></a>
+    <a routerLink="/"><p class="title">PolyCiné</p></a>
 
     <div class="separator"></div>
   </div>
@@ -8,27 +8,23 @@
     <div class="navbar-right">
       <nav>
         <ul>
-          <li *ngIf="this.authService.isLoggedIn" >
-            <a href="/films">Films</a>
+          <li *ngIf="this.authService.isLoggedIn">
+            <a routerLink="/films">Films</a>
           </li>
 
-          <li *ngIf="this.authService.isLoggedIn" >
-            <a href="/acteurs">Acteurs</a>
-          </li>
-
-          <li *ngIf="this.authService.isLoggedIn" >
-            <a href="/personnages">Personnages</a>
+          <li *ngIf="this.authService.isLoggedIn">
+            <a routerLink="/acteurs">Acteurs</a>
           </li>
 
           <li *ngIf="!this.authService.isLoggedIn">
-            <a href="/login">Login</a>
+            <a routerLink="/login">Login</a>
           </li>
 
           <li>
-            <button mat-button color="primary" (click)="logout()" *ngIf="this.authService.isLoggedIn" type="button" class="btn btn-danger nav-button">Se déconnecter</button>
+            <button mat-raised-button color="warn" (click)="logout()" *ngIf="this.authService.isLoggedIn" type="button">Se déconnecter</button>
           </li>
         </ul>
       </nav>
     </div>
 
-</header>
+</div>

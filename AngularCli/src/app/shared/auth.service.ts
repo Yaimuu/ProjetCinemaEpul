@@ -28,8 +28,7 @@ export class AuthService {
             this.getUser(user.login!).subscribe((userRes) => {
               localStorage.setItem('currentUser', JSON.stringify(userRes));
               //TODO route à redéfinir, mais on redirigera pas dans la même page selon le role
-              const route = userRes.role === 'ADMIN' ? 'admin' : 'home';
-              this.router.navigate([route]);
+              this.router.navigate(['']);
             });
           }, error: err => this.errorMessage$.next(err.error.message)
         });
@@ -54,7 +53,8 @@ export class AuthService {
   }
 
   public getTokenHeader(): HttpHeaders {
-    return new HttpHeaders().set('Authorization', 'Bearer ' + this.getToken());
+    return new HttpHeaders().set('Authorization', 'Bearer ' + this.getToken())
+                            .set('Content-Type', 'application/json; charset=UTF-8');
   }
 
 }

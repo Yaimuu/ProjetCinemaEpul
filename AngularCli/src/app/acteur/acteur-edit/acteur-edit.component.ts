@@ -47,8 +47,8 @@ export class ActeurEditComponent {
     }
   }
 
-  change(event: MatCheckboxChange) {
-    if (event.checked) {
+  change(checked: boolean) {
+    if (checked) {
       this.formActeur.controls['dateDeces'].setValue(null);
     } else {
       this.formActeur.controls['dateDeces'].setValue(new Date());
