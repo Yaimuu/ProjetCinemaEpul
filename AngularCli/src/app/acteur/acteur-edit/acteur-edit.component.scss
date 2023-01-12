@@ -1,0 +1,11 @@
+.formActeur {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

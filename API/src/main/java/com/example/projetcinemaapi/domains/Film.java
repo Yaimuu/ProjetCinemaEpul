@@ -1,5 +1,6 @@
 package com.example.projetcinemaapi.domains;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
@@ -39,11 +40,13 @@ public class Film {
     private Integer montantRecette;
 
     @Setter
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "NoRea", nullable = false)
     private Realisateur noRea;
 
     @Setter
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "CodeCat", nullable = false)
     private Categorie codeCat;

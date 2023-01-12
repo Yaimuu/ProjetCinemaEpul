@@ -35,17 +35,29 @@ public class ActeurControlleur {
         return ResponseEntity.ok(acteur);
     }
 
+    @GetMapping("/notfilm/{film_id}")
+    public ResponseEntity getActorNotIn(@PathVariable int filmId) {
+        logger.info(this.getClass().getSimpleName() + " getActorNotIn(" + filmId + ")");
+        return ResponseEntity.ok(acteurService.getActeursNotIn(filmId));
+    }
+
     @PostMapping("/create")
     public ResponseEntity createActor(@RequestBody ActeurRequest request) {
         logger.info(this.getClass().getSimpleName() + " createActor " + request.toString());
         acteurService.createActeur(request);
-        return ResponseEntity.ok("Acteur créé");
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/update/{id}")
     public ResponseEntity updateActor(@PathVariable int id, @RequestBody ActeurRequest acteur) {
         logger.info(this.getClass().getSimpleName() + " updateActor " + acteur.toString());
         acteurService.updateActeur(id, acteur);
-        return ResponseEntity.ok("Acteur mis à jour");
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteActeur(@PathVariable int id) {
+        logger.info(this.getClass().getSimpleName() + " deleteActeur(" + id + ")");
+        acteurService.removeActeur(id);
     }
 }

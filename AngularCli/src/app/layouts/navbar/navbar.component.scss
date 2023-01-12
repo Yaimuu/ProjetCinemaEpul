@@ -1,9 +1,20 @@
-header {
+.header {
   display: flex;
-  padding: 0.5em;
+  padding: 15px;
   margin-bottom: 0.5em;
   background-color: #4285F4;
   color: white;
+
+  a {
+    color: white;
+    text-decoration: none;
+    height: auto;
+    margin-right: 10px;
+
+    p {
+      margin-bottom: 0px;
+    }
+  }
 }
 
 .navbar {
@@ -16,37 +27,47 @@ header {
   height: 60px;
 }
 
-.navbar-left, .navbar-right {
+.navbar-left {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-right {
   display: flex;
   align-items: center;
   gap: 20px;
-
-
 }
 
 p {
   margin-bottom: 0;
 }
 
-a {
-  color: white;
-}
+nav {
+  ul {
+    display: flex;
+    align-items: center;
+    padding: 0;
 
-nav > ul {
-  display: flex;
-  padding: 0;
-  margin-left: 1em;
-}
+    li {
+      margin-left: 10px;
+      list-style: none;
 
-nav > ul > li {
-  list-style: none;
-  margin-right: 0.5em;
+      a {
+        font-size: 15px;
+      }
+    }
+
+    li:last-child {
+      right: 0;
+      position: absolute;
+      margin-right: 10px;
+    }
+  }
 }
 
 .title {
   font-size: 28px;
   margin-left: 20px;
-  font-weight: bold;
   color: white;
 }
 

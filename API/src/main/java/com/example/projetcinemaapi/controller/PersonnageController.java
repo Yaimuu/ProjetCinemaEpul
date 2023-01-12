@@ -1,6 +1,5 @@
 package com.example.projetcinemaapi.controller;
 
-import com.example.projetcinemaapi.domains.PersonnageId;
 import com.example.projetcinemaapi.domains.request.PersonnageRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -28,30 +27,48 @@ public class PersonnageController {
         return ResponseEntity.ok(personnageService.getAll());
     }
 
-    @GetMapping("/id")
+    @PostMapping("/id")
     public ResponseEntity getPersonnage(@RequestBody PersonnageRequest request) {
         logger.info(this.getClass().getSimpleName() + " getPersonnage " + request);
         return ResponseEntity.ok(personnageService.getPersonnage(request));
+    }
+
+    @GetMapping("/film/{id}")
+    public ResponseEntity getPersonnagesByFilm(@PathVariable int id) {
+        logger.info(this.getClass().getSimpleName() + " getPersonnagesByFilm(" + id + ")");
+        return ResponseEntity.ok(personnageService.getPersonnagesByFilm(id));
+    }
+
+    @GetMapping("/acteur/{id}")
+    public ResponseEntity getPersonnagesByActeur(@PathVariable int id) {
+        logger.info(this.getClass().getSimpleName() + " getPersonnagesByActeur(" + id + ")");
+        return ResponseEntity.ok(personnageService.getPersonnagesByActeur(id));
+    }
+
+    @GetMapping("/film/{film_id}/acteur/{acteur_id}")
+    public ResponseEntity getPersonnagesByFilm(@PathVariable int film_id, @PathVariable int acteur_id) {
+        logger.info(this.getClass().getSimpleName() + " getPersonnagesByFilmAndActeur(" + film_id + ',' + acteur_id + ")");
+        return ResponseEntity.ok(personnageService.getPersonnagesByFilmAndActeur(film_id, acteur_id));
     }
 
     @PostMapping("/create")
     public ResponseEntity createPersonnage(@RequestBody PersonnageRequest request) {
         logger.info(this.getClass().getSimpleName() + " createPersonnage " + request);
         personnageService.create(request);
-        return ResponseEntity.ok("Personnage créé");
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/update")
     public ResponseEntity updatePersonnage(@RequestBody PersonnageRequest request) {
         logger.info(this.getClass().getSimpleName() + " updatePersonnage " + request);
         personnageService.update(request);
-        return ResponseEntity.ok("Personnage mis à jour");
+        return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping
-    public ResponseEntity removePersonnage(@RequestBody PersonnageId id) {
-        logger.info(this.getClass().getSimpleName() + " removePersonnage(" + id + ")");
-        personnageService.removeById(id);
+    @PostMapping("/delete")
+    public ResponseEntity removePersonnage(@RequestBody PersonnageRequest request) {
+        logger.info(this.getClass().getSimpleName() + " removePersonnage " + request);
+        personnageService.removeById(request);
         return ResponseEntity.noContent().build();
     }
 }

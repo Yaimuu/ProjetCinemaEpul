@@ -1,0 +1,60 @@
+<h1>{{ titre }}</h1>
+
+<form [formGroup]="formFilm">
+  <input formControlName="id" type="hidden"/>
+
+  <div class="formFilm">
+
+    <div class="row">
+      <mat-form-field appearance="fill">
+        <mat-label>Titre :</mat-label>
+        <input formControlName="titre" matInput/>
+      </mat-form-field>
+
+      <mat-datepicker #picker></mat-datepicker>
+      <mat-form-field appearance="fill">
+        <mat-label>Date de sortie :</mat-label>
+        <input matInput [matDatepicker]="picker" (focus)="picker.open()" formControlName="dateSortie" readonly>
+      </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Durée (minutes) :</mat-label>
+      <input type="number" formControlName="duree" matInput/>
+    </mat-form-field>
+
+    <div class="row">
+      <mat-form-field appearance="fill">
+        <mat-label>Budget (€) :</mat-label>
+        <input type="number" formControlName="budget" matInput/>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Montant recette (€) :</mat-label>
+        <input type="number" formControlName="montantRecette" matInput/>
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field appearance="fill">
+        <mat-label>Réalisateur</mat-label>
+        <mat-select formControlName="realisateur">
+          <mat-option *ngFor="let real of realisateurs" [value]="real.id">
+            {{real.prenRea}} {{real.nomRea}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Catégorie</mat-label>
+        <mat-select formControlName="categorie">
+          <mat-option *ngFor="let cat of categories" [value]="cat.id">
+            {{cat.libelleCat}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <button mat-raised-button color="primary" [disabled]="!formFilm.valid" (click)="submit()">Sauvegarder</button>
+  </div>
+</form>

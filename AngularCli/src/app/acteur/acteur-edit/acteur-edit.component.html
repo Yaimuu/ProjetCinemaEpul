@@ -1,0 +1,36 @@
+<h1>{{ titre }}</h1>
+
+<form [formGroup]="formActeur">
+  <input formControlName="id" type="hidden"/>
+
+  <div class="formActeur">
+
+    <mat-form-field appearance="fill">
+      <mat-label>Nom :</mat-label>
+      <input formControlName="nomAct" matInput/>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Prénom :</mat-label>
+      <input formControlName="prenAct" matInput/>
+    </mat-form-field>
+
+    <mat-datepicker #pickerNaiss></mat-datepicker>
+    <mat-form-field appearance="fill">
+      <mat-label>Date de naissance :</mat-label>
+      <input matInput [matDatepicker]="pickerNaiss" (focus)="pickerNaiss.open()" formControlName="dateNaiss" readonly>
+    </mat-form-field>
+
+    <div class="row">
+      <mat-form-field appearance="fill">
+        <mat-label>Date de décès :</mat-label>
+        <input matInput [matDatepicker]="pickerDeces" (focus)="pickerDeces.open()" formControlName="dateDeces" readonly>
+      </mat-form-field>
+      <mat-datepicker #pickerDeces></mat-datepicker>
+
+      <mat-checkbox (change)="change($event.checked)">Est vivant</mat-checkbox>
+    </div>
+
+    <button mat-raised-button color="primary" [disabled]="!formActeur.valid" (click)="submit()">Sauvegarder</button>
+  </div>
+</form>

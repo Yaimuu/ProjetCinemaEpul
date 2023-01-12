@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {User} from "../model/user.model";
 import {BehaviorSubject, Observable} from "rxjs";
 import {Router} from "@angular/router";
@@ -20,7 +20,7 @@ export class AuthService {
 
   signIn(user: User) {
     return this.http
-      .post<JwtResponse>(`${environment.baseUrl}/Authentication/login`, user)
+      .post<JwtResponse>(`${environment.baseUrl}/auth/login`, user)
       .subscribe(
         {
           next: jwt => {
@@ -28,8 +28,7 @@ export class AuthService {
             this.getUser(user.login!).subscribe((userRes) => {
               localStorage.setItem('currentUser', JSON.stringify(userRes));
               //TODO route à redéfinir, mais on redirigera pas dans la même page selon le role
-              const route = userRes.role === 'ADMIN' ? 'admin' : 'home';
-              this.router.navigate([route]);
+              this.router.navigate(['']);
             });
           }, error: err => this.errorMessage$.next(err.error.message)
         });
@@ -52,4 +51,10 @@ export class AuthService {
     let api = `${environment.baseUrl}/users/${id}`;
     return this.http.get<User>(api);
   }
+
+  public getTokenHeader(): HttpHeaders {
+    return new HttpHeaders().set('Authorization', 'Bearer ' + this.getToken())
+                            .set('Content-Type', 'application/json; charset=UTF-8');
+  }
+
 }

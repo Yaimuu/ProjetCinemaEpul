@@ -38,15 +38,12 @@ public class SecurityConfig {
                 .authorizeRequests().antMatchers("/" + AUTH_ROUTE + "/login").permitAll()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/import", "/export", "/close", "/drop").hasRole("ADMIN")
-                .and()
-                .authorizeRequests()
                 .anyRequest().authenticated()
-                .and().
-                exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                .and()
+                .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 .and().sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS).
-                and()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }

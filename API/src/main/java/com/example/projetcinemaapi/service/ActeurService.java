@@ -23,6 +23,10 @@ public class ActeurService {
         return acteurRepository.findById(id).orElseThrow(ActorNotFoundException::new);
     }
 
+    public List<Acteur> getActeursNotIn(int id) {
+        return acteurRepository.getActeurNotIn(id);
+    }
+
     public void createActeur(ActeurRequest request) {
         Acteur acteur = Acteur.builder()
                 .nomAct(request.getNomAct())
@@ -42,5 +46,9 @@ public class ActeurService {
         ae.setPrenAct(acteur.getPrenAct());
 
         acteurRepository.save(ae);
+    }
+
+    public void removeActeur(int id) {
+        acteurRepository.deleteById(id);
     }
 }

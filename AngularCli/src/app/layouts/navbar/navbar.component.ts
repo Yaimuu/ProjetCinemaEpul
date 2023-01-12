@@ -7,6 +7,7 @@ import {AuthService} from "../../shared/auth.service";
   styleUrls: ['./navbar.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
+
 export class NavbarComponent implements OnInit {
 
   constructor(public authService: AuthService) { }

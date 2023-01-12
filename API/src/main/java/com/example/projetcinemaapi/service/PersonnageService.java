@@ -30,6 +30,18 @@ public class PersonnageService {
         return getById(new PersonnageId(request.getNoFilm(), request.getNoAct()));
     }
 
+    public List<Personnage> getPersonnagesByFilm(int id) {
+        return personnageRepository.findById_NoFilm(id);
+    }
+
+    public List<Personnage> getPersonnagesByActeur(int id) {
+        return personnageRepository.findById_NoAct(id);
+    }
+
+    public Personnage getPersonnagesByFilmAndActeur(int film_id, int acteur_id) {
+        return personnageRepository.findById_NoFilmAndId_NoAct(film_id, acteur_id);
+    }
+
     public void create(PersonnageRequest request) {
         Personnage personnage = Personnage.builder()
                 .id(new PersonnageId(request.getNoFilm(), request.getNoAct()))
@@ -46,7 +58,10 @@ public class PersonnageService {
         personnageRepository.save(personnage);
     }
 
-    public void removeById(PersonnageId id) {
-        personnageRepository.deleteById(id);
+    public void removeById(PersonnageRequest request) {
+        personnageRepository.deleteById(PersonnageId.builder()
+                                                    .noAct(request.getNoAct())
+                                                    .noFilm(request.getNoFilm())
+                                                    .build());
     }
 }
