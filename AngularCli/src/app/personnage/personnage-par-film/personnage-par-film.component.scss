@@ -1,12 +1,7 @@
 .row {
   display: flex;
   flex-direction: row;
-  align-items: center;
   gap: 20px;
-}
-
-form {
-  margin-bottom: 20px;
 }
 
 .mat-action-row {
@@ -24,8 +19,4 @@ form {
 
 .action-button-end {
   justify-content: flex-end;
-}
-
-.hidden {
-  display:none;
 }

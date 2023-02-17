@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpResponse} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {observable, Observable} from "rxjs";
 import {PutFilm, Film} from "../model/film.model";
 import {environment} from "../../environments/environment";
 import {AuthService} from "../shared/auth.service";
@@ -18,6 +18,10 @@ export class FilmService {
 
   public getFilm(id: number): Observable<HttpResponse<Film>> {
     return this.http.get<Film>(`${environment.baseUrl}/films/` + id, {observe: "response", headers: this.auth.getTokenHeader()})
+  }
+
+  public getFilmsNotPlayedBy(film_id: number): Observable<HttpResponse<Film[]>> {
+    return this.http.get<Film[]>(`${environment.baseUrl}/films/notacteur/` + film_id, {observe: "response", headers: this.auth.getTokenHeader()})
   }
 
   public createFilm(film: PutFilm): Observable<HttpResponse<any>> {

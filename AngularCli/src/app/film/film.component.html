@@ -1,36 +1,66 @@
 <div class="row">
   <h1>Films</h1>
   <button mat-raised-button color="primary" (click)="ajouter()">+ Ajouter</button>
+  <button mat-raised-button color="primary" (click)="switchSearch()"><mat-icon fontIcon="search"></mat-icon>{{ textButton }}</button>
 </div>
 
+<div *ngIf="isSearch">
+  <form [formGroup]="formSearch">
 
+    <div class="row">
+      <label>Catégories : </label>
+      <mat-checkbox [checked]="categories.length === displayedCategories.length" color="primary" (change)="catAll($event.checked)">Toutes</mat-checkbox>
+      <mat-checkbox *ngFor="let cat of displayedCategories" [checked]="categories.indexOf(cat, 0) > -1" (change)="catAdd($event.checked, cat)">
+        {{cat.libelleCat}}
+      </mat-checkbox>
+    </div>
 
-<mat-accordion class="example-headers-align">
-  <mat-expansion-panel *ngFor="let film of films; let i = index" [expanded]="step === i" (opened)="setStep(i)">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        {{film.titre}}
-      </mat-panel-title>
-      <mat-panel-description>
-        Date de sortie : {{film.dateSortie | date:'d MMMM y' : '+0100' : 'fr-FR'}}
-      </mat-panel-description>
-    </mat-expansion-panel-header>
+    <label>Nom film :</label>
+    <mat-form-field appearance="fill">
+      <input formControlName="nomFilm" matInput/>
+    </mat-form-field>
 
-    <p>Durée : {{film.duree}} minutes</p>
-    <p>Budget : {{film.budget}}€</p>
-    <p>Montant recette : {{film.montantRecette}}€</p>
-    <p>Réalisateur : {{film.noRea.prenRea}} {{film.noRea.nomRea}}</p>
-    <p>Catégorie : {{film.codeCat.libelleCat}}</p>
+    <div class="row">
+      <label>Réalisateur : </label>
+      <mat-checkbox [checked]="realisateurs.length === displayedRealisateurs.length" color="primary" (change)="realAll($event.checked)">Tous</mat-checkbox>
+      <mat-checkbox *ngFor="let real of displayedRealisateurs" [checked]="realisateurs.indexOf(real, 0) > -1" (change)="realAdd($event.checked, real)">
+        {{real.prenRea}} {{real.nomRea}}
+      </mat-checkbox>
+    </div>
 
-    <mat-action-row>
-      <div class="action-button action-button-start">
-        <button *ngIf="i > 0" aria-labelledby="up" mat-button color="primary" (click)="prevStep()"><mat-icon aria-hidden="false" aria-label="up" fontIcon="keyboard_arrow_up"></mat-icon></button>
-        <button *ngIf="i < films.length - 1" aria-labelledby="down" mat-button color="primary" (click)="nextStep()"><mat-icon aria-hidden="false" aria-label="down" fontIcon="keyboard_arrow_down"></mat-icon></button>
-      </div>
-      <div class="action-button action-button-end">
-        <button mat-raised-button color="accent" (click)="modifier(film.id)">Modifier</button>
-        <button mat-raised-button color="warn" (click)="supprimer(film.id)">Supprimer</button>
-      </div>
-    </mat-action-row>
-  </mat-expansion-panel>
-</mat-accordion>
+  </form>
+</div>
+
+<div *ngIf="!isSearch">
+  <mat-accordion class="example-headers-align">
+    <mat-expansion-panel *ngFor="let film of filterFilmsArray; let i = index" [expanded]="step === i" (opened)="setStep(i)">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{film.titre}}
+        </mat-panel-title>
+        <mat-panel-description>
+          Date de sortie : {{film.dateSortie | date:'d MMMM y' : '+0100' : 'fr-FR'}}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <p>Durée : {{film.duree}} minutes</p>
+      <p>Budget : {{film.budget}}€</p>
+      <p>Montant recette : {{film.montantRecette}}€</p>
+      <p>Réalisateur : {{film.noRea.prenRea}} {{film.noRea.nomRea}}</p>
+      <p>Catégorie : {{film.codeCat.libelleCat}}</p>
+
+      <button mat-raised-button color="primary" (click)="personnages(film.id)">Voir les personnages</button>
+
+      <mat-action-row>
+        <div class="action-button action-button-start">
+          <button *ngIf="i > 0" aria-labelledby="up" mat-button color="primary" (click)="prevStep()"><mat-icon aria-hidden="false" aria-label="up" fontIcon="keyboard_arrow_up"></mat-icon></button>
+          <button *ngIf="i < films.length - 1" aria-labelledby="down" mat-button color="primary" (click)="nextStep()"><mat-icon aria-hidden="false" aria-label="down" fontIcon="keyboard_arrow_down"></mat-icon></button>
+        </div>
+        <div class="action-button action-button-end">
+          <button mat-raised-button color="accent" (click)="modifier(film.id)">Modifier</button>
+          <button mat-raised-button color="warn" (click)="supprimer(film.id)">Supprimer</button>
+        </div>
+      </mat-action-row>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

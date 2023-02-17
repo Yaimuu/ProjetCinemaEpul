@@ -10,6 +10,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'films', loadChildren: () => import('./film/film.module').then(m => m.FilmModule) },
   { path: 'acteurs', loadChildren: () => import('./acteur/acteur.module').then(m => m.ActeurModule) },
+  { path: 'personnages', loadChildren: () => import('./personnage/personnage.module').then(m => m.PersonnageModule) },
   { path: '**', redirectTo: '' }
 ];
 

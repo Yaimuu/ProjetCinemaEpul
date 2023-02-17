@@ -1,0 +1,36 @@
+<div *ngIf="acteur">
+  <div class="row">
+    <h1>Personnages de l'acteur : {{acteur.nomAct}}</h1>
+    <button mat-raised-button color="primary" (click)="ajouter(acteur.id)">+ Ajouter</button>
+  </div>
+
+  <mat-accordion class="example-headers-align" *ngIf="personnages.length > 0">
+    <mat-expansion-panel *ngFor="let personnage of personnages; let i = index" [expanded]="step === i" (opened)="setStep(i)">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{personnage.nomPers}}
+        </mat-panel-title>
+        <mat-panel-description>
+          Joué par {{personnage.noAct.nomAct}} dans le film {{personnage.noFilm.titre}}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <p>
+        <button mat-raised-button color="primary" (click)="showFilm(personnage.noFilm.id)">Voir le film</button>
+      </p>
+      <p>
+        <button mat-raised-button color="primary" (click)="showActeur(personnage.noAct.id)">Voir l'acteur</button>
+      </p>
+      <mat-action-row>
+        <div class="action-button action-button-start">
+          <button *ngIf="i > 0" aria-labelledby="up" mat-button color="primary" (click)="prevStep()"><mat-icon aria-hidden="false" aria-label="up" fontIcon="keyboard_arrow_up"></mat-icon></button>
+          <button *ngIf="i < personnages.length - 1" aria-labelledby="down" mat-button color="primary" (click)="nextStep()"><mat-icon aria-hidden="false" aria-label="down" fontIcon="keyboard_arrow_down"></mat-icon></button>
+        </div>
+        <div class="action-button action-button-end">
+          <button mat-raised-button color="accent" (click)="modifier(personnage)">Modifier</button>
+          <button mat-raised-button color="warn" (click)="supprimer(personnage)">Supprimer</button>
+        </div>
+      </mat-action-row>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

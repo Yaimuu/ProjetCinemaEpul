@@ -1,0 +1,20 @@
+<div *ngIf="film">
+  <div class="row">
+    <h1>Film : {{film.titre}}</h1>
+  </div>
+  <p>Date de sortie : {{film.dateSortie | date:'d MMMM y' : '+0100' : 'fr-FR'}}</p>
+  <p>Durée : {{film.duree}} minutes</p>
+  <p>Budget : {{film.budget}}€</p>
+  <p>Montant recette : {{film.montantRecette}}€</p>
+  <p>Réalisateur : {{film.noRea.prenRea}} {{film.noRea.nomRea}}</p>
+  <p>Catégorie : {{film.codeCat.libelleCat}}</p>
+
+  <p>
+    <button mat-raised-button color="primary" (click)="personnages(film.id)">Voir ses personnages</button>
+  </p>
+
+  <div class="bottom-row">
+    <button mat-raised-button color="accent" (click)="modifier(film.id)">Modifier</button>
+    <button mat-raised-button color="warn" (click)="supprimer(film.id)">Supprimer</button>
+  </div>
+</div>

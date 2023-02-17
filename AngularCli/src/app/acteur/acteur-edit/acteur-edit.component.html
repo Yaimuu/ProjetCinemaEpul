@@ -28,10 +28,8 @@
       </mat-form-field>
       <mat-datepicker #pickerDeces></mat-datepicker>
 
-      <mat-checkbox (change)="change($event)">Est vivant</mat-checkbox>
+      <mat-checkbox (change)="change($event.checked)">Est vivant</mat-checkbox>
     </div>
-
-
 
     <button mat-raised-button color="primary" [disabled]="!formActeur.valid" (click)="submit()">Sauvegarder</button>
   </div>

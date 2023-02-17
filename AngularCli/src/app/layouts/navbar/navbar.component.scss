@@ -1,6 +1,6 @@
-header {
+.header {
   display: flex;
-  padding: 0.5em;
+  padding: 15px;
   margin-bottom: 0.5em;
   background-color: #4285F4;
   color: white;
@@ -8,6 +8,12 @@ header {
   a {
     color: white;
     text-decoration: none;
+    height: auto;
+    margin-right: 10px;
+
+    p {
+      margin-bottom: 0px;
+    }
   }
 }
 
@@ -21,7 +27,12 @@ header {
   height: 60px;
 }
 
-.navbar-left, .navbar-right {
+.navbar-left {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-right {
   display: flex;
   align-items: center;
   gap: 20px;
@@ -34,16 +45,22 @@ p {
 nav {
   ul {
     display: flex;
+    align-items: center;
     padding: 0;
-    margin-left: 1em;
 
     li {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
+      margin-left: 10px;
       list-style: none;
-      margin-right: 0.5em;
+
+      a {
+        font-size: 15px;
+      }
+    }
+
+    li:last-child {
+      right: 0;
+      position: absolute;
+      margin-right: 10px;
     }
   }
 }
@@ -51,7 +68,6 @@ nav {
 .title {
   font-size: 28px;
   margin-left: 20px;
-  font-weight: bold;
   color: white;
 }
 

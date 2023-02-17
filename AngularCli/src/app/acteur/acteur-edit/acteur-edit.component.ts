@@ -47,8 +47,8 @@ export class ActeurEditComponent {
     }
   }
 
-  change(event: MatCheckboxChange) {
-    if (event.checked) {
+  change(checked: boolean) {
+    if (checked) {
       this.formActeur.controls['dateDeces'].setValue(null);
     } else {
       this.formActeur.controls['dateDeces'].setValue(new Date());
@@ -74,7 +74,7 @@ export class ActeurEditComponent {
       this.acteurService.updateActeur(this.formActeur.controls['id'].value, acteur).subscribe({
         next: (response) => {
           if (response.ok) {
-            this.router.navigate(['/acteurs']);
+            this.router.navigate(['/acteurs/' + this.formActeur.controls['id'].value]);
           } else {
             alert('KO');
           }

@@ -16,33 +16,37 @@ import {MatMenuModule} from "@angular/material/menu";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatSelectModule} from "@angular/material/select";
+import { FilmSingleComponent } from './film-single/film-single.component';
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 @NgModule({
   declarations: [
     FilmComponent,
-    FilmEditComponent
+    FilmEditComponent,
+    FilmSingleComponent
   ],
   exports: [
 
   ],
-  imports: [
-    CommonModule,
-    FilmRoutingModule,
-    MatInputModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatButtonModule,
-    MatDividerModule,
-    MatDialogModule,
-    MatTableModule,
-    MatSortModule,
-    MatPaginatorModule,
-    MatIconModule,
-    MatMenuModule,
-    MatExpansionModule,
-    MatDatepickerModule,
-    MatSelectModule
-  ]
+    imports: [
+        CommonModule,
+        FilmRoutingModule,
+        MatInputModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatButtonModule,
+        MatDividerModule,
+        MatDialogModule,
+        MatTableModule,
+        MatSortModule,
+        MatPaginatorModule,
+        MatIconModule,
+        MatMenuModule,
+        MatExpansionModule,
+        MatDatepickerModule,
+        MatSelectModule,
+        MatCheckboxModule
+    ]
 })
 export class FilmModule {
 }
