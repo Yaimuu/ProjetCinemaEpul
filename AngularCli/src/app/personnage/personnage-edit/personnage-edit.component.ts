@@ -74,6 +74,7 @@ export class PersonnageEditComponent {
             throw new Error('Erreur lors du chargement des acteurs');
           }
           this.acteurs = response.body;
+          console.log(this.acteurs);
         }
       });
     } else if (this.route.snapshot.params['acteur_id']) {

@@ -36,7 +36,7 @@ public class ActeurControlleur {
     }
 
     @GetMapping("/notfilm/{film_id}")
-    public ResponseEntity getActorNotIn(@PathVariable int filmId) {
+    public ResponseEntity getActorNotIn(@PathVariable("film_id") int filmId) {
         logger.info(this.getClass().getSimpleName() + " getActorNotIn(" + filmId + ")");
         return ResponseEntity.ok(acteurService.getActeursNotIn(filmId));
     }

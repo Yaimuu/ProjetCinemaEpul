@@ -1,10 +1,10 @@
-<div *ngIf="personnages.length > 0">
+<div *ngIf="acteur">
   <div class="row">
-    <h1>Personnages de l'acteur : {{personnages.at(0)!.noAct.nomAct}}</h1>
-    <button mat-raised-button color="primary" (click)="ajouter(personnages.at(0)!.noAct.id)">+ Ajouter</button>
+    <h1>Personnages de l'acteur : {{acteur.nomAct}}</h1>
+    <button mat-raised-button color="primary" (click)="ajouter(acteur.id)">+ Ajouter</button>
   </div>
 
-  <mat-accordion class="example-headers-align">
+  <mat-accordion class="example-headers-align" *ngIf="personnages.length > 0">
     <mat-expansion-panel *ngFor="let personnage of personnages; let i = index" [expanded]="step === i" (opened)="setStep(i)">
       <mat-expansion-panel-header>
         <mat-panel-title>
@@ -33,5 +33,4 @@
       </mat-action-row>
     </mat-expansion-panel>
   </mat-accordion>
-
 </div>

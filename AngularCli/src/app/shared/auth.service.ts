@@ -45,6 +45,7 @@ export class AuthService {
 
   public doLogout() {
     localStorage.removeItem('access_token');
+    this.router.navigate(['/accueil']);
   }
 
   private getUser(id: string): Observable<User> {

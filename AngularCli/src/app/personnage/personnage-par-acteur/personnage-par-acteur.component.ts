@@ -4,6 +4,7 @@ import {PersonnageService} from "../../services/personnage.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {HttpResponse} from "@angular/common/http";
 import {ActeurService} from "../../services/acteur.service";
+import {Acteur} from "../../model/acteur.model";
 
 @Component({
   selector: 'app-personnage-par-acteur',
@@ -14,6 +15,7 @@ export class PersonnageParActeurComponent {
 
   step = -1;
   personnages: Personnage[] = [];
+  acteur?: Acteur;
   displayedColumns: string[] = ['nomAct', 'prenAct', 'dateNaiss', 'dateDeces'];
 
   constructor(private personnageService: PersonnageService,
@@ -30,6 +32,14 @@ export class PersonnageParActeurComponent {
             throw new Error('Erreur lors du chargement des personnages');
           }
           this.personnages = response.body;
+        }
+      });
+      this.acteurService.getActeur(this.route.snapshot.params['id']).subscribe({
+        next: (response: HttpResponse<Acteur>) => {
+          if (!response.ok || !response.body) {
+            throw new Error('Erreur lors du chargement de l\'acteur');
+          }
+          this.acteur = response.body;
         }
       })
     }

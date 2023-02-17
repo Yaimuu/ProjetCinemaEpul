@@ -4,6 +4,7 @@ import {PersonnageService} from "../../services/personnage.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {HttpResponse} from "@angular/common/http";
 import {FilmService} from "../../services/film.service";
+import {Film} from "../../model/film.model";
 
 @Component({
   selector: 'app-personnage-par-film',
@@ -14,6 +15,7 @@ export class PersonnageParFilmComponent {
 
   step = -1;
   personnages: Personnage[] = [];
+  film?: Film;
   displayedColumns: string[] = ['nomAct', 'prenAct', 'dateNaiss', 'dateDeces'];
 
   constructor(private personnageService: PersonnageService,
@@ -30,6 +32,14 @@ export class PersonnageParFilmComponent {
             throw new Error('Erreur lors du chargement des personnages');
           }
           this.personnages = response.body;
+        }
+      });
+      this.filmService.getFilm(this.route.snapshot.params['id']).subscribe({
+        next: (response: HttpResponse<Film>) => {
+          if (!response.ok || !response.body) {
+            throw new Error('Erreur lors du chargement du film');
+          }
+          this.film = response.body;
         }
       })
     }

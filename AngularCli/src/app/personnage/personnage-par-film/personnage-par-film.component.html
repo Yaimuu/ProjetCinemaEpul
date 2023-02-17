@@ -1,10 +1,10 @@
-<div *ngIf="personnages.length > 0">
+<div *ngIf="film">
   <div class="row">
-    <h1>Personnages du film : {{personnages.at(0)!.noFilm.titre}}</h1>
-    <button mat-raised-button color="primary" (click)="ajouter(personnages.at(0)!.noFilm.id)">+ Ajouter</button>
+    <h1>Personnages du film : {{film.titre}}</h1>
+    <button mat-raised-button color="primary" (click)="ajouter(film.id)">+ Ajouter</button>
   </div>
 
-  <mat-accordion class="example-headers-align">
+  <mat-accordion class="example-headers-align" *ngIf="personnages.length > 0">
     <mat-expansion-panel *ngFor="let personnage of personnages; let i = index" [expanded]="step === i" (opened)="setStep(i)">
       <mat-expansion-panel-header>
         <mat-panel-title>
